@@ -1,54 +1,56 @@
-# Designing Sections
+# 功能模块设计 (Designing Sections)
 
-After completing [Product Planning](product-planning.md), you're ready to design individual sections. Work through each section in your roadmap, completing these steps for each one.
+完成 [产品规划](product-planning.md) 后，你就可以开始设计各个具体模块了。按照路线图中的顺序，为每个模块完成以下步骤。
 
-## 1. Shape the Section
+## 1. 模块定义 (Shape the Section)
 
 ```
 /shape-section
 ```
 
-Define what the section does and generate its sample data — all in one step. If you have multiple sections, you'll be asked which one to work on.
+唯一定义模块的功能并生成其示例数据 —— 一步到位。如果你有多个模块，AI 会询问你要处理哪一个。
 
-This is a conversational process to establish:
+这是一个对话过程，旨在确定：
 
-- **Overview** — What this section is for (2-3 sentences)
-- **User flows** — The main actions and step-by-step interactions
-- **UI requirements** — Specific layouts, patterns, or components needed
-- **Scope boundaries** — What's intentionally excluded
+- **概览** — 此模块的作用（2-3 句话）。
+- **用户流程** — 主要操作和逐步交互。
+- **UI 要求** — 所需的具体布局、模式或组件。
+- **范围边界** — 有意不包含的内容。
 
-Share any notes or ideas you have. The AI will ask clarifying questions about user actions, information to display, and UI patterns. Focus on experience and interface requirements—no backend or database details.
+分享你的任何笔记或想法。AI 会针对用户操作、要显示的信息和 UI 模式提出澄清性问题。专注于用户体验和界面要求 —— 无需讨论后端或数据库细节。
 
-You'll also be asked whether this section should display inside the application shell (most sections do) or as a standalone page (for things like landing pages or embedded widgets).
+你还会被询问该模块应显示在容器 (Shell) 内（大多数模块如此），还是作为独立页面显示（用于落地页或嵌入式挂件等）。
 
-Once it has enough information, the AI writes the spec and generates sample data + TypeScript types automatically:
+一旦获得足够的信息，AI 会自动编写规范并生成示例数据 + TypeScript 类型：
 
-- **Sample data** — 5-10 realistic records with varied content, edge cases, and a `_meta` section describing each entity
-- **TypeScript types** — Data interfaces for each entity, plus a Props interface with callbacks for actions
+- **示例数据** — 5-10 条真实的记录，包含多样化的内容、边界情况，以及描述每个实体的 `_meta` 部分。
+- **TypeScript 类型** — 每个的数据接口模型，以及包含操作回调的 Props 接口。
 
-**Creates:**
-- `product/sections/[section-id]/spec.md` — Section specification
-- `product/sections/[section-id]/data.json` — Sample data with `_meta` descriptions
-- `product/sections/[section-id]/types.ts` — TypeScript interfaces
+**创建文件：**
+- `product/sections/[section-id]/spec.md` — 模块规范。
+- `product/sections/[section-id]/data.json` — 包含 `_meta` 描述的示例数据。
+- `product/sections/[section-id]/types.ts` — TypeScript 接口。
 
-**To update sample data later:** Run `/sample-data` to modify the data structure or sample records.
+**稍后更新示例数据：** 运行 `/sample-data` 以修改数据模型 (Data Shape) 或示例记录。
 
-## 2. Design the Screen
+---
+
+## 2. 界面设计 (Design Screen)
 
 ```
 /design-screen
 ```
 
-Build the actual React components for the section. This is where the spec and sample data become a working UI.
+为该模块构建实际的 React 组件。在这里，规范和示例数据将转化为可运行的 UI。
 
-### What Gets Created
+### 创建的内容
 
-**Exportable components** (props-based, portable):
+**可导出组件**（基于 props，可移植）：
 
-The main component and any sub-components, all accepting data and callbacks via props. These are what get exported to your codebase.
+主组件和任何子组件，所有这些组件都通过 props 接收数据和回调。这些是将被导出到你实际产品代码库的内容。
 
 ```tsx
-// Example: Components accept props, never import data directly
+// 示例：组件接收 props，严禁直接导入数据
 export function InvoiceList({
   invoices,
   onView,
@@ -60,58 +62,64 @@ export function InvoiceList({
 }
 ```
 
-**Preview wrapper** (for Design OS only):
+**预览包装器 (Preview wrapper)**（仅供 Design OS 使用）：
 
-A wrapper that imports the sample data and feeds it to the component, so you can see it running in Design OS.
+一个导入示例数据并将其喂给组件的包装器，这样你就可以在 Design OS 中看到它的运行效果。
 
-### Design Requirements
+### 设计要求
 
-All screen designs include:
+所有界面设计 (Design Screen) 均包含：
 
-- **Mobile responsive** — Tailwind responsive prefixes (`sm:`, `md:`, `lg:`)
-- **Light & dark mode** — Using `dark:` variants
-- **Design tokens applied** — Your color palette and typography choices
-- **All spec requirements** — Every user flow and UI requirement implemented
+- **移动端响应式** — 使用 Tailwind 响应式前缀（`sm:`, `md:`, `lg:`）。
+- **亮色与暗色模式** — 使用 `dark:` 变体。
+- **应用原子设计 (Design Tokens)** — 应用你的色板和排版字体选择。
+- **满足所有规范要求** — 实现规范中的每一个用户流程和 UI 要求。
 
-### Multiple Views
+### 多个视图
 
-If the spec implies multiple views (list view, detail view, form, etc.), you'll be asked which to build first. Run `/design-screen` again for additional views.
+如果规范暗示有多个视图（列表视图、详情视图、表单等），AI 会询问先构建哪一个。再次运行 `/design-screen` 来创建其他视图。
 
-**Creates:**
-- `src/sections/[section-id]/components/[ViewName].tsx` — Main component
-- `src/sections/[section-id]/components/[SubComponent].tsx` — Sub-components as needed
-- `src/sections/[section-id]/components/index.ts` — Component exports
-- `src/sections/[section-id]/[ViewName].tsx` — Preview wrapper
+**创建文件：**
+- `src/sections/[section-id]/components/[ViewName].tsx` — 主组件。
+- `src/sections/[section-id]/components/[SubComponent].tsx` — 根据需要的子组件。
+- `src/sections/[section-id]/components/index.ts` — 组件导出索引。
+- `src/sections/[section-id]/[ViewName].tsx` — 预览包装器。
 
-**Important:** Restart your dev server after creating screen designs to see the changes.
+**重要提示：** 创建界面设计 (Design Screen) 后，请重启开发服务器以查看更改。
 
-## 3. Capture Screenshots (Optional)
+---
+
+## 3. 捕捉截图 (可选)
 
 ```
 /screenshot-design
 ```
 
-Take screenshots of your screen designs for documentation. Screenshots are saved alongside the spec and data files.
+为你的界面设计 (Design Screen) 截取屏幕截图以便存档。截图会与规范和数据文件保存在一起。
 
-This command:
-1. Starts the dev server automatically
-2. Navigates to your screen design
-3. Hides the Design OS navigation bar
-4. Captures a full-page screenshot
+该命令会：
+1. 自动启动开发服务器。
+2. 导航到你的界面设计 (Design Screen)。
+3. 隐藏 Design OS 导航栏。
+4. 捕捉全屏截图。
 
-Screenshots are useful for:
-- Visual reference during implementation
-- Documentation and handoff materials
-- Comparing designs across sections
+截图的用途：
+- 实施过程中的视觉参考。
+- 文档和交付材料。
+- 在各模块之间比较设计。
 
-**Requires:** Playwright MCP server. If not installed, you'll be prompted with setup instructions.
+**需要：** Playwright MCP 服务器。如果未安装，系统会提示你安装说明。
 
-**Creates:** `product/sections/[section-id]/[screen-name].png`
+**创建文件：** `product/sections/[section-id]/[screen-name].png`
 
-## Repeat for Each Section
+---
 
-Work through your roadmap sections in order. Each section builds on the foundation you established and benefits from the consistency of your global data shape and design tokens.
+## 为每个模块重复此过程
 
-## What's Next
+按顺序处理路线图中的各个模块。每个模块都建立在你奠定的基础之上，并受益于全局数据模型 (Data Shape) 和原子设计 (Design Tokens) 的一致性。
 
-When all sections are designed, you're ready to export. See [Export](export.md) for generating the complete handoff package.
+---
+
+## 下一步
+
+当所有模块设计完成后，你就可以导出了。请参阅 [导出](export.md) 以生成完整的交付包。

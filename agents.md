@@ -1,86 +1,86 @@
-# Agent Directives for Design OS
+# Design OS 代理指令
 
-Design OS is a **product planning and design tool** that helps users define their product vision, sketch out their data shape, design their UI, and prepare export packages for implementation in a separate codebase.
+Design OS 是一个**产品规划与设计工具**，帮助用户定义产品愿景 (Product Vision)、规划数据模型 (Data Shape)、设计 UI，并为在独立代码库中实施准备导出包。
 
-> **Important**: Design OS is a planning tool, not the end product codebase. The screen designs and components generated here are meant to be exported and integrated into your actual product's codebase.
-
----
-
-## Understanding Design OS Context
-
-When working in Design OS, be aware of two distinct contexts:
-
-### 1. Design OS Application
-The React application that displays and manages planning files. When modifying the Design OS UI itself:
-- Files live in `src/` (components, pages, utilities)
-- Uses the Design OS design system (stone palette, DM Sans, etc.)
-- Provides the interface for viewing specs, screen designs, exports, etc.
-
-### 2. Product Design (Screen Designs & Exports)
-The product you're planning and designing. When creating screen designs and exports:
-- Screen design components live in `src/sections/[section-name]/` and `src/shell/`
-- Product definition files live in `product/`
-- Exports are packaged to `product-plan/` for integration into a separate codebase
-- Follow the design requirements specified in each section's spec
+> **重要提示**: Design OS 是一个规划工具，而非最终产品的代码库。这里生成的界面设计 (Design Screen) 和组件旨在被导出并集成到你实际产品的代码库中。
 
 ---
 
-## Getting Started — The Planning Flow
+## 理解 Design OS 上下文
 
-Design OS follows a structured planning sequence:
+在 Design OS 中工作时，请注意两个不同的上下文：
 
-### 1. Product Vision (`/product-vision`)
-Define your product overview, roadmap sections, and data shape — all in one conversational flow. After answering clarifying questions, all three files are generated automatically.
-**Output:** `product/product-overview.md`, `product/product-roadmap.md`, `product/data-shape/data-shape.md`
+### 1. Design OS 应用程序 (Application)
+显示和管理规划文件的 React 应用程序。修改 Design OS UI 本身时：
+- 文件位于 `src/`（组件、页面、工具函数）
+- 使用 Design OS 设计系统（stone 色板、DM Sans 字体等）
+- 提供查看规范、界面设计 (Design Screen)、导出等功能的界面
 
-Use `/product-roadmap`, `/data-shape` individually to update those files after initial creation.
-
-### 2. Design System (`/design-tokens`)
-Choose your color palette (from Tailwind) and typography (from Google Fonts). These tokens are applied to all screen designs.
-**Output:** `product/design-system/colors.json`, `product/design-system/typography.json`
-
-### 3. Application Shell (`/design-shell`)
-Design the persistent navigation and layout that wraps all sections.
-**Output:** `product/shell/spec.md`, `src/shell/components/`
-
-### 4. For Each Section:
-- `/shape-section` — Define the specification and generate sample data + types
-- `/sample-data` — Update sample data and types (if already created)
-- `/design-screen` — Create screen designs
-- `/screenshot-design` — Capture screenshots
-
-### 5. Export (`/export-product`)
-Generate the complete export package with all components, types, and handoff documentation.
-**Output:** `product-plan/`
+### 2. 产品设计 (Product Design - 界面设计 (Design Screen) 与导出)
+你正在规划和设计的产品。创建界面设计 (Design Screen) 和导出时：
+- 界面设计 (Design Screen) 组件位于 `src/sections/[section-name]/` 和 `src/shell/`
+- 产品定义文件位于 `product/`
+- 导出文件打包至 `product-plan/`，以便集成到独立代码库中
+- 遵循每个模块规范中指定的设计要求
 
 ---
 
-## File Structure
+## 快速开始 — 规划流程
+
+Design OS 遵循结构化的规划序列：
+
+### 1. 产品愿景 (Product Vision) (`/product-vision`)
+在一次对话流中定义你的产品概览、路线图模块和数据模型 (Data Shape)。在回答完澄清性问题后，这三个文件将自动生成。
+**输出:** `product/product-overview.md`, `product/product-roadmap.md`, `product/data-shape/data-shape.md`
+
+在初始创建后，使用 `/product-roadmap` 和 `/data-shape` 分别更新这些文件。
+
+### 2. 原子设计 (Design Tokens) (`/design-tokens`)
+选择你的色板（来自 Tailwind）和字体（来自 Google Fonts）。这些原子 (Tokens) 将应用于所有界面设计 (Design Screen)。
+**输出:** `product/design-system/colors.json`, `product/design-system/typography.json`
+
+### 3. 容器设计 (Shell Design) (`/design-shell`)
+设计包装所有模块的持久导航和布局。
+**输出:** `product/shell/spec.md`, `src/shell/components/`
+
+### 4. 针对每个模块 (Section):
+- `/shape-section` — 定义规范并生成示例数据 + 类型
+- `/sample-data` — 更新示例数据和类型（如果已创建）
+- `/design-screen` — 创建界面设计 (Design Screen)
+- `/screenshot-design` — 截取屏幕截图
+
+### 5. 导出 (`/export-product`)
+生成包含所有组件、类型和交付文档的完整导出包。
+**输出:** `product-plan/`
+
+---
+
+## 文件结构
 
 ```
-product/                           # Product definition (portable)
-├── product-overview.md            # Product description, problems/solutions, features
-├── product-roadmap.md             # List of sections with titles and descriptions
+product/                           # 产品定义 (可移植)
+├── product-overview.md            # 产品描述、问题/解决方案、功能点
+├── product-roadmap.md             # 模块路线图列表（标题与描述）
 │
-├── data-shape/                    # Product data shape
-│   └── data-shape.md              # Entity names, descriptions, and relationships
+├── data-shape/                    # 产品数据模型 (Data Shape)
+│   └── data-shape.md              # 实体名称、描述及关系
 │
-├── design-system/                 # Design tokens
-│   ├── colors.json                # { primary, secondary, neutral }
-│   └── typography.json            # { heading, body, mono }
+├── design-system/                 # 原子设计 (Design Tokens)
+│   ├── colors.json                # { 主色, 辅助色, 中性色 }
+│   └── typography.json            # { 标题, 正文, 等宽 }
 │
-├── shell/                         # Application shell
-│   └── spec.md                    # Shell specification
+├── shell/                         # 容器 (Shell)
+│   └── spec.md                    # 容器规范
 │
 └── sections/
     └── [section-name]/
-        ├── spec.md                # Section specification
-        ├── data.json              # Sample data for screen designs
-        ├── types.ts               # TypeScript interfaces
-        └── *.png                  # Screenshots
+        ├── spec.md                # 模块规范
+        ├── data.json              # 界面设计 (Design Screen) 的示例数据
+        ├── types.ts               # TypeScript 接口
+        └── *.png                  # 屏幕截图
 
 src/
-├── shell/                         # Shell design components
+├── shell/                         # 容器设计 (Shell Design) 组件
 │   ├── components/
 │   │   ├── AppShell.tsx
 │   │   ├── MainNav.tsx
@@ -90,123 +90,123 @@ src/
 │
 └── sections/
     └── [section-name]/
-        ├── components/            # Exportable components
+        ├── components/            # 可导出的组件
         │   ├── [Component].tsx
         │   └── index.ts
-        └── [ViewName].tsx         # Preview wrapper
+        └── [ViewName].tsx         # 预览包装器
 
-product-plan/                      # Export package (generated)
-├── README.md                      # Quick start guide
-├── product-overview.md            # Product summary
-├── prompts/                       # Ready-to-use prompts for coding agents
-│   ├── one-shot-prompt.md         # Prompt for full implementation
-│   └── section-prompt.md          # Prompt template for incremental
-├── instructions/                  # Implementation instructions
-│   ├── one-shot-instructions.md   # All milestones combined
-│   └── incremental/               # Milestone-by-milestone instructions
+product-plan/                      # 导出包 (生成的)
+├── README.md                      # 快速入门指南
+├── product-overview.md            # 产品摘要
+├── prompts/                       # 供编码代理使用的就绪提示词
+│   ├── one-shot-prompt.md         # 全量实施提示词
+│   └── section-prompt.md          # 增量实施的提示词模板
+├── instructions/                  # 实施指南
+│   ├── one-shot-instructions.md   # 合并的所有里程碑指南
+│   └── incremental/               # 按里程碑划分的实施指南
 │       ├── 01-shell.md
-│       └── [NN]-[section-id].md   # Section-specific instructions
-├── design-system/                 # Tokens, colors, fonts
-├── data-shapes/                   # UI data contracts (types components expect)
-├── shell/                         # Shell components
-└── sections/                      # Section components (with tests.md each)
+│       └── [NN]-[section-id].md   # 模块特定指南
+├── design-system/                 # 原子设计 (Design Tokens)、颜色、字体
+├── data-shapes/                   # UI 数据契约（组件期望的类型）
+├── shell/                         # 容器组件
+└── sections/                      # 模块组件（每个包含 tests.md）
 ```
 
 ---
 
-## Design Requirements
+## 设计要求
 
-When creating screen designs, follow these guidelines:
+创建界面设计 (Design Screen) 时，请遵循以下准则：
 
-- **Mobile Responsive**: Use Tailwind's responsive prefixes (`sm:`, `md:`, `lg:`, `xl:`) to ensure layouts adapt properly across screen sizes.
+- **移动端响应式**: 使用 Tailwind 的响应式前缀（`sm:`, `md:`, `lg:`, `xl:`）确保布局适配不同屏幕尺寸。
 
-- **Light & Dark Mode**: Use `dark:` variants for all colors. Test that all UI elements are visible and readable in both modes.
+- **亮色与暗色模式**: 为所有颜色使用 `dark:` 变体。测试 UI 元素在两种模式下是否清晰可见。
 
-- **Use Design Tokens**: When design tokens are defined, apply the product's color palette and typography. Otherwise, fall back to `stone` for neutrals and `lime` for accents.
+- **使用原子设计 (Design Tokens)**: 如果定义了原子 (Tokens)，请应用产品的色板和字体。否则，默认使用 `stone` 作为中性色，`lime` 作为强调色。
 
-- **Props-Based Components**: All screen design components must accept data and callbacks via props. Never import data directly in exportable components.
+- **基于 Props 的组件**: 所有界面设计 (Design Screen) 组件必须通过 props 接收数据和回调。严禁在可导出组件中直接导入数据。
 
-- **No Navigation in Section Screen Designs**: Section screen designs should not include navigation chrome. The shell handles all navigation.
-
----
-
-## Tailwind CSS Directives
-
-These rules apply to both the Design OS application and all screen designs/components it generates:
-
-- **Tailwind CSS v4**: We always use Tailwind CSS v4 (not v3). Do not reference or create v3 patterns.
-
-- **No tailwind.config.js**: Tailwind CSS v4 does not use a `tailwind.config.js` file. Never reference, create, or modify one.
-
-- **Use Built-in Utility Classes**: Avoid writing custom CSS. Stick to using Tailwind's built-in utility classes for all styling.
-
-- **Use Built-in Colors**: Avoid defining custom colors. Use Tailwind's built-in color utility classes (e.g., `stone-500`, `lime-400`, `red-600`).
+- **模块设计中不含导航**: 模块界面设计 (Design Screen) 不应包含导航框架。导航由容器 (Shell) 统一处理。
 
 ---
 
-## The Four Pillars
+## Tailwind CSS 指令
 
-Design OS is organized around four main areas:
+这些规则适用于 Design OS 应用程序及其生成的界面设计 (Design Screen)/组件：
 
-1. **Product Overview** — The "what" and "why"
-   - Product name and description
-   - Problems and solutions
-   - Key features
-   - Sections/roadmap
+- **Tailwind CSS v4**: 始终使用 Tailwind CSS v4（而非 v3）。不要参考或创建 v3 模式。
 
-2. **Data Shape** — The "nouns" of the system
-   - Core entity names and descriptions
-   - Conceptual relationships between entities
-   - Shared vocabulary for consistent naming across sections
+- **无 tailwind.config.js**: Tailwind CSS v4 不使用 `tailwind.config.js` 文件。严禁参考、创建或修改该文件。
 
-3. **Design System** — The "look and feel"
-   - Color palette (Tailwind colors)
-   - Typography (Google Fonts)
+- **使用内置工具类**: 避免编写自定义 CSS。所有样式均应使用 Tailwind 的内置工具类。
 
-4. **Application Shell** — The persistent chrome
-   - Global navigation structure
-   - User menu
-   - Layout pattern
-
-Plus **Sections** — The individual features, each with spec, data, screen designs.
+- **使用内置颜色**: 避免定义自定义颜色。使用 Tailwind 的内置颜色工具类（例如 `stone-500`, `lime-400`, `red-600`）。
 
 ---
 
-## Design System Scope
+## 四大支柱
 
-Design OS separates concerns between its own UI and the product being designed:
+Design OS 围绕四个主要领域组织：
 
-- **Design OS UI**: Always uses the stone/lime palette and DM Sans typography
-- **Product Screen Designs**: Use the design tokens defined for the product (when available)
-- **Shell**: Uses product design tokens to preview the full app experience
+1. **产品概览 (Product Overview)** — “是什么”及“为什么”
+   - 产品名称与描述
+   - 问题与解决方案
+   - 核心功能
+   - 模块/路线图
+
+2. **数据模型 (Data Shape)** — 系统的“名词”
+   - 核心实体名称与描述
+   - 实体间的逻辑关系
+   - 用于确保各模块命名一致的共享词汇表
+
+3. **原子设计 (Design Tokens)** — “外观与感受”
+   - 色板（Tailwind 颜色）
+   - 字体（Google Fonts）
+
+4. **容器设计 (Shell Design)** — 持久框架
+   - 全局导航结构
+   - 用户菜单
+   - 布局模式
+
+外加 **模块 (Sections)** — 单独的功能点，每个包含规范、数据，并进行界面设计 (Design Screen)。
 
 ---
 
-## Export & Handoff
+## 设计系统范围
 
-The `/export-product` command generates a UI design handoff package:
+Design OS 区分了其自身 UI 与所设计产品之间的关注点：
 
-- **Ready-to-use prompts**: Pre-written prompts to copy/paste into coding agents
-  - `one-shot-prompt.md`: For full implementation in one session
-  - `section-prompt.md`: Template for section-by-section implementation
-- **Implementation instructions**: UI-focused guides for each milestone
-  - `product-overview.md`: Always provide for context
-  - `one-shot-instructions.md`: All milestones combined
-  - Incremental instructions in `instructions/incremental/`
-- **Test specs**: Each section includes `tests.md` with UI behavior specs
-- **Portable components**: Props-based, ready for any React setup
-- **Data shapes**: TypeScript interfaces defining what data the components expect
-
-The handoff focuses on UI designs, product requirements, and user flows. Backend architecture, data modeling, and business logic decisions are left to the implementation agent. The prompts guide the agent to ask clarifying questions about tech stack and requirements before building.
+- **Design OS UI**: 始终使用 stone/lime 色板和 DM Sans 字体
+- **产品界面设计 (Design Screen)**: 使用为产品定义的动态原子 (Tokens)（如有）
+- **Shell**: 使用产品原子 (Tokens) 来预览完整的应用体验
 
 ---
 
-## Design System (Design OS Application)
+## 导出与交付
 
-The Design OS application itself uses a "Refined Utility" aesthetic:
+使用 `/export-product` 命令生成 UI 设计交付包：
 
-- **Typography**: DM Sans for headings and body, IBM Plex Mono for code
-- **Colors**: Stone palette for neutrals (warm grays), lime for accents
-- **Layout**: Maximum 800px content width, generous whitespace
-- **Cards**: Minimal borders (1px), subtle shadows, generous padding
-- **Motion**: Subtle fade-ins (200ms), no bouncy animations
+- **就绪提示词**: 预先写好的提示词，可直接复制到编码代理中
+  - `one-shot-prompt.md`: 用于在一次会话中完成全量实施
+  - `section-prompt.md`: 模块化实施的模板
+- **实施指南**: 专注于 UI 的里程碑指南
+  - `product-overview.md`: 始终提供作为背景信息
+  - `one-shot-instructions.md`: 合并的所有里程碑指南
+  - `instructions/incremental/` 下的增量指南
+- **测试规范**: 每个模块包含 `tests.md`，规定 UI 行为规范
+- **便携组件**: 基于 Props，适用于任何 React 设置
+- **数据模型 (Data Shape)**: TypeScript 接口，定义组件期望的数据格式
+
+交付物专注于 UI 设计、产品要求和用户流程。后端架构、建模和业务逻辑决策留给实施代理（Implementation Agent）。提示词会引导代理在构建前询问技术栈及相关要求的澄清问题。
+
+---
+
+## 设计系统（Design OS 应用程序本身）
+
+Design OS 应用程序本身采用“精炼实用 (Refined Utility)”审美：
+
+- **排版**: 标题和正文使用 DM Sans，代码使用 IBM Plex Mono
+- **颜色**: Stone 色板用于中性色（暖灰色），lime（青柠）用于强调色
+- **布局**: 内容宽度最大 800px，留白充足
+- **卡片**: 极简边框 (1px)，微妙投影，内边距充足
+- **动态**: 微妙的淡入效果 (200ms)，无回弹动画

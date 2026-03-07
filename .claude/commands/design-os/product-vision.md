@@ -1,167 +1,185 @@
-# Product Vision
+# 产品愿景 (Product Vision)
 
-You are helping the user define their product vision for Design OS. This is a conversational process that results in three files: the product overview, product roadmap, and data shape.
+你正在协助用户为 Design OS 定义他们的产品愿景。这是一个对话式的过程，最终会生成三个文件：产品概览 (Product Overview)、产品路线图 (Product Roadmap) 和数据模型 (Data Shape)。
 
-## Step 1: Gather Initial Input
+## 第 1 步：收集初始输入
 
-First, ask the user to share their raw notes, ideas, or thoughts about the product they want to build. Be warm and open-ended:
+首先，请用户分享关于他们想要构建的产品的原始笔记、想法或思考。语气要热情且开放：
 
-"I'd love to help you define your product vision. Tell me about the product you're building - share any notes, ideas, or rough thoughts you have. What problem are you trying to solve? Who is it for? Don't worry about structure yet, just share what's on your mind."
+“我很乐意帮助你定义产品愿景。请告诉我你正在构建的产品——分享任何笔记、想法或粗略的思考。你试图解决什么问题？它是为谁设计的？现在不用担心结构，尽管分享你脑海中的想法即可。”
 
-Wait for their response before proceeding.
+等待用户回复后再继续。
 
-## Step 2: Ask Clarifying Questions
+## 第 2 步：提出澄清性问题
 
-After receiving their input, use the AskUserQuestion tool to ask targeted questions covering all three areas. Ask questions one or two at a time, conversationally, with follow-ups as needed.
+收到输入后，使用 AskUserQuestion 工具提出针对性问题，涵盖以下三个领域。每次提出一两个问题，以对话方式进行，并在必要时进行追问。
 
-### Product Vision Questions
+### 产品愿景 (Product Vision) 问题
 
-Shape the core product definition:
+塑造核心产品定义：
 
-- **The product name** - A clear, concise name for the product
-- **The core product description** (1-3 sentences that capture the essence)
-- **The key problems** the product solves (1-5 specific pain points)
-- **How the product solves each problem** (concrete solutions)
-- **The main features** that make this possible
+- **产品名称** - 一个清晰、简洁的产品名称
+- **核心产品描述**（1-3 句捕捉核心精华的话）
+- **产品解决的关键问题**（1-5 个具体痛点）
+- **产品如何解决每个问题**（具体的解决方案）
+- **实现这一切的主要功能**
 
-**Important:** If the user hasn't already provided a product name, ask them:
-- "What would you like to call this product? (A short, memorable name)"
+**重要提示：** 如果用户尚未提供产品名称，请询问他们：
+- “你想给这个产品起什么名字？（一个简短、好记的名字）”
 
-Example questions (adapt based on their input):
-- "Who is the primary user of this product? Can you describe them?"
-- "What's the single biggest pain point you're addressing?"
-- "How do people currently solve this problem without your product?"
-- "What makes your approach different or better?"
-- "What are the 3-5 most essential features?"
+示例问题（根据其输入进行调整）：
+- “这个产品的主要用户是谁？你能描述一下他们吗？”
+- “你正在解决的首要痛点是什么？”
+- “在没有你的产品之前，人们目前是如何解决这个问题的？”
+- “你的方法有何不同或更好之处？”
+- “最核心的 3-5 个功能是什么？”
 
-### Roadmap Questions
+### 路线图 (Product Roadmap) 问题
 
-Identify the main areas/sections of the product:
+确定产品的主要区域/模块：
 
-- "What are the main areas or screens of this product? (e.g., Dashboard, Settings, Invoices)"
-- "What would you consider the most critical area to build first?"
-- "Are there any areas that should be separate from the core functionality?"
+- “这个产品的主要区域或屏幕有哪些？（例如：仪表板、设置、发票管理）”
+- “你认为哪个区域是首先需要构建的最关键部分？”
+- “是否有任何区域应该从核心功能中分离出来？”
 
-### Data Shape Questions
+### 数据模型 (Data Shape) 问题
 
-Identify the core entities ("nouns") of the product:
+确定产品的核心实体（系统中的“名词”）：
 
-- "What are the main 'things' users will create, view, or manage in this product? (e.g., Projects, Invoices, Clients)"
-- "How do these things relate to each other?"
+- “在这个产品中，用户将创建、查看或管理的‘事物’是什么？（例如：项目、发票、客户）”
+- “这些事物之间是如何相互关联的？”
 
-The goal is to gather enough information for all three files before proceeding. Don't need exhaustive detail on every entity — just the core nouns and their relationships.
+目标是在继续之前为所有三个文件收集足够的信息。不需要对每个实体提供详尽的细节——只需核心名词及其关系即可。
 
-## Step 3: Auto-Proceed — Create All Three Files
+## 第 3 步：自动处理 — 创建所有三个文件
 
-Once you have enough information from the clarifying questions, **immediately proceed** without asking for approval. Write all three files uninterrupted:
+一旦从澄清问题中获得了足够的信息，**立即继续**进行，无需征得许可。不间断地写入所有三个文件：
 
-### 3a: Create Product Overview
+### 3a: 创建产品概览 (Product Overview)
 
-Create the file at `/product/product-overview.md` with this exact format:
-
-```markdown
-# [Product Name]
-
-## Description
-[The finalized 1-3 sentence description]
-
-## Problems & Solutions
-
-### Problem 1: [Problem Title]
-[How the product solves it in 1-2 sentences]
-
-### Problem 2: [Problem Title]
-[How the product solves it in 1-2 sentences]
-
-[Add more as needed, up to 5]
-
-## Key Features
-- [Feature 1]
-- [Feature 2]
-- [Feature 3]
-[Add more as needed]
-```
-
-**Important:** The `# [Product Name]` heading at the top is required - this is what displays as the card title in the app.
-
-### 3b: Create Product Roadmap
-
-Create `/product/product-roadmap.md` with this exact format:
+在 `/product/product-overview.md` 创建文件，采用以下确切格式：
 
 ```markdown
-# Product Roadmap
+# [产品名称]
 
-## Sections
+## 描述
+[最终确定的 1-3 句描述]
 
-### 1. [Section Title]
-[One sentence description]
+## 问题与解决方案
 
-### 2. [Section Title]
-[One sentence description]
+### 问题 1: [问题标题]
+[产品如何在 1-2 句内解决它]
 
-### 3. [Section Title]
-[One sentence description]
+### 问题 2: [问题标题]
+[产品如何在 1-2 句内解决它]
+
+[根据需要添加更多，最多 5 个]
+
+## 核心功能
+- [功能 1]
+- [功能 2]
+- [功能 3]
+[根据需要添加更多]
 ```
 
-Sections should be:
-- Ordered by development priority
-- Self-contained enough to design and build independently
-- 3-5 sections (ideal range)
-- The numbered format (`### 1. Title`) is required for parsing
+**重要提示：** 顶部的 `# [产品名称]` 标题是必需的——这是它在应用程序中作为卡片标题显示的内容。
 
-### 3c: Create Data Shape
+### 3b: 创建产品路线图 (Product Roadmap)
 
-Create `/product/data-shape/data-shape.md` with this format:
+创建 `/product/product-roadmap.md`，采用以下确切格式：
 
 ```markdown
-# Data Shape
+# 产品路线图
 
-## Entities
+## 功能模块
 
-### [EntityName]
-[Plain-language description of what this entity represents and its purpose in the system.]
+### 1. [模块标题]
+[section-id: 模块 ID]
+[一句描述]
 
-### [AnotherEntity]
-[Plain-language description.]
+### 2. [模块标题]
+[section-id: 模块 ID]
+[一句描述]
 
-[Add more entities as needed]
-
-## Relationships
-
-- [Entity1] has many [Entity2]
-- [Entity2] belongs to [Entity1]
-- [Entity3] belongs to both [Entity1] and [Entity2]
-[Add more relationships as needed]
+### 3. [模块标题]
+[section-id: 模块 ID]
+[一句描述]
 ```
 
-Keep descriptions minimal — focus on what each entity represents, not every field it contains. Entity names should be singular (User, Invoice, Project — not Users, Invoices).
+**section-id 生成规则：**
+- 英文标题：直接转小写，空格和特殊字符替换为中划线
+  - 例："Unified Search" → `unified-search`
+  - 例："Project Dashboard" → `project-dashboard`
+- 中文标题：保持英文或拼音形式，不要使用纯中文
+  - 例："统一检索" → 建议使用英文 "Unified Search" → `unified-search`
+- 中英文混合：英文保留，中文转拼音或建议使用纯英文
+  - 例："统一 Search" → 建议改为 "Unified Search" → `unified-search`
 
-### 3d: Inform the User
+**重要：** section-id 将用于创建 `product/sections/[section-id]/` 目录，必须：
+- 只包含小写字母、数字和中划线
+- 不能为空
+- 不能以中划线开头或结尾
 
-After all three files are created, present a summary:
+模块应满足：
+- 按开发优先级排序
+- 足够独立，以便可以独立设计和构建
+- 3-5 个模块（理想范围）
+- 必须使用编号格式（`### 1. 标题`）以便解析
+- 每个模块必须包含 `[section-id: xxx]` 行（标题下一行）
 
-"I've set up the foundation for **[Product Name]**:
+### 3c: 创建数据模型 (Data Shape)
 
-1. **Product Overview** — `product/product-overview.md`
-2. **Product Roadmap** — `product/product-roadmap.md` ([N] sections)
-3. **Data Shape** — `product/data-shape/data-shape.md` ([N] entities)
+创建 `/product/data-shape/data-shape.md`，采用以下格式：
 
-**Sections:**
-1. **[Section 1]** — [Description]
-2. **[Section 2]** — [Description]
-3. **[Section 3]** — [Description]
+```markdown
+# 数据模型 (Data Shape)
 
-**Core Entities:** [Entity1], [Entity2], [Entity3]
+## 实体
 
-Review these files and let me know if you'd like to adjust anything. When you're ready, run `/design-tokens` to choose your color palette and typography, or `/shape-section` to start designing a section."
+### [实体名称]
+[这种实体代表什么的平实语言描述，以及它在系统中的目的。]
 
-## Important Notes
+### [另一个实体]
+[平实语言描述。]
 
-- Be conversational and helpful, not robotic
-- Ask follow-up questions when answers are vague
-- Help the user think through their product, don't just transcribe
-- Keep the final output concise and clear
-- The format must match exactly for the app to parse it correctly
-- **Always ensure the product has a name** - if user didn't provide one, ask for it
-- Do NOT present a draft for approval — go straight to writing all three files after gathering enough info
-- If the user requests changes after reviewing, update the relevant files immediately
+[根据需要添加更多实体]
+
+## 关系
+
+- [实体 1] 拥有多个 [实体 2]
+- [实体 2] 属于 [实体 1]
+- [实体 3] 同时属于 [实体 1] 和 [实体 2]
+[根据需要添加更多关系]
+```
+
+保持描述简炼——重点关注每个实体代表什么，而不是它包含的每个字段。实体名称应为单数（User, Invoice, Project —— 而不是 Users, Invoices）。
+
+### 3d: 告知用户
+
+在所有三个文件创建完成后，展示摘要：
+
+“我已经为 **[产品名称]** 打下了基础：
+
+1. **产品概览** — `product/product-overview.md`
+2. **产品路线图** — `product/product-roadmap.md`（共 [N] 个模块）
+3. **数据模型 (Data Shape)** — `product/data-shape/data-shape.md`（共 [N] 个实体）
+
+**功能模块：**
+1. **[模块 1]** — [描述]
+2. **[模块 2]** — [描述]
+3. **[模块 3]** — [描述]
+
+**核心实体：** [实体 1], [实体 2], [实体 3]
+
+请查看这些文件，如果有任何需要调整的地方请告诉我。准备就绪后，可以运行 `/design-tokens` 来选择你的色板和排版，或者运行 `/shape-section` 开始设计一个具体模块。”
+
+## 重要注意事项
+
+- 对话要有帮助，不要像机器人
+- 答案模糊时提出跟进问题
+- 协助用户思考他们的产品，而不仅仅是记录抄写
+- 保持最终输出简洁清晰
+- 格式必须完全匹配，以便应用程序能够正确解析
+- **始终确保产品有名称** - 如果用户未提供，请务必询问
+- 不要展示草稿等待批准 —— 收集足够信息后直接开始写入所有三个文件
+- 如果用户在审核后要求更改，请立即更新相关文件

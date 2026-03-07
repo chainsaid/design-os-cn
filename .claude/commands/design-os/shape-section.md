@@ -1,168 +1,168 @@
-# Shape Section
+# 模块定义 (Shape Section)
 
-You are helping the user define the specification for a section of their product. This is a conversational process to establish the scope of functionality, user flows, and UI requirements — then automatically generate the spec and sample data.
+你正在协助用户为他们产品的某个功能模块（Section）定义规范。这是一个对话式的过程，旨在确定功能范围、用户流程和 UI 要求 —— 然后自动生成规范文件和示例数据。
 
-## Step 1: Check Prerequisites
+## 第 1 步：检查先决条件
 
-First, verify that `/product/product-roadmap.md` exists. If it doesn't:
+首先，确认 `/product/product-roadmap.md` 是否存在。如果不存在：
 
-"I don't see a product roadmap defined yet. Please run `/product-roadmap` first to define your product sections, then come back to shape individual sections."
+"我还没看到已定义的产品路线图。请先运行 `/product-roadmap` 来定义你的产品模块，然后再回来对具体模块进行定义。"
 
-Stop here if the roadmap doesn't exist.
+如果路线图不存在，请停止操作。
 
-## Step 2: Identify the Target Section
+## 第 2 步：确定目标模块
 
-Read `/product/product-roadmap.md` to get the list of available sections.
+阅读 `/product/product-roadmap.md` 以获取可用模块列表。
 
-If there's only one section, auto-select it. If there are multiple sections, use the AskUserQuestion tool to ask which section the user wants to work on:
+如果只有一个模块，则自动选择它。如果有多个模块，请使用 AskUserQuestion 工具询问用户想要处理哪个模块：
 
-"Which section would you like to define the specification for?"
+“你想为哪个模块定义规范？”
 
-Present the available sections as options.
+将可用模块作为选项展示给用户。
 
-## Step 3: Gather Initial Input
+## 第 3 步：收集初始 input
 
-Once the section is identified, invite the user to share any initial thoughts:
+确定模块后，邀请用户分享任何初步想法：
 
-"Let's define the scope and requirements for **[Section Title]**.
+“让我们来定义 **[模块标题]** 的范围和要求。
 
-Do you have any notes or ideas about what this section should include? Share any thoughts about the features, user flows, or UI patterns you're envisioning. If you're not sure yet, we can start with questions."
+关于这个模块应该包含什么，你有什么笔记或想法吗？分享任何关于你构想的功能、用户流程或 UI 模式的想法。如果你还不确定，我们可以从提问开始。”
 
-Wait for their response. The user may provide raw notes or ask to proceed with questions.
+等待用户回复。用户可能会提供原始笔记，也可能要求开始提问。
 
-## Step 4: Ask Clarifying Questions
+## 第 4 步：提出澄清性问题
 
-Use the AskUserQuestion tool to ask 4-6 targeted questions to define:
+使用 AskUserQuestion 工具提出 4-6 个针对性问题，以定义：
 
-- **Main user actions/tasks** - What can users do in this section?
-- **Information to display** - What data and content needs to be shown?
-- **Key user flows** - What are the step-by-step interactions?
-- **UI patterns** - Any specific interactions, layouts, or components needed?
-- **Scope boundaries** - What should be explicitly excluded?
+- **主要用户操作/任务** - 用户在此模块中可以做什么？
+- **要显示的信息** - 需要展示哪些数据和内容？
+- **核心用户流程** - 逐步的交互过程是怎样的？
+- **UI 模式** - 是否需要特定的交互、布局或组件？
+- **范围边界** - 哪些内容应被明确排除在外？
 
-Example questions (adapt based on their input and the section):
-- "What are the main actions a user can take in this section?"
-- "What information needs to be displayed on the primary view?"
-- "Walk me through the main user flow - what happens step by step?"
-- "Are there any specific UI patterns you want to use (e.g., tables, cards, modals)?"
-- "What's intentionally out of scope for this section?"
-- "Are there multiple views needed (e.g., list view and detail view)?"
+示例问题（根据其输入和具体模块进行调整）：
+- “用户在此模块中可以执行哪些主要操作？”
+- “主视图上需要显示哪些信息？”
+- “请向我描述一下主要的用户流程 —— 它是如何步步进行的？”
+- “是否有任何你想使用的特定 UI 模式（例如：表格、卡片、模态框）？”
+- “对于这个模块，有哪些内容是特意不包含在范围内的？”
+- “是否需要多个视图（例如：列表视图和详情视图）？”
 
-Ask questions one or two at a time, conversationally. Focus on user experience and interface requirements - no backend or database details.
+每次提出一两个问题，以对话方式进行。专注于用户体验和界面要求 —— 不要涉及后端或数据库细节。
 
-## Step 5: Ask About Shell Configuration
+## 第 5 步：询问容器 (Shell) 配置
 
-If a shell design has been created for this project (check if `/src/shell/components/AppShell.tsx` exists), ask the user about shell usage:
+如果本项目已经创建了容器设计 (Shell Design)（检查 `/src/shell/components/AppShell.tsx` 是否存在），请询问用户关于容器的使用：
 
-"Should this section's screen designs be displayed **inside the app shell** (with navigation header), or should they be **standalone pages** (without the shell)?
+“这个模块的界面设计 (Design Screen) 应该是显示在 **容器 (Shell) 内**（带有导航页眉），还是作为 **独立页面**（不带容器）显示？
 
-Most sections use the app shell, but some pages like public-facing views, landing pages, or embedded widgets should be standalone."
+大多数模块都会使用容器 (Shell)，但某些页面（如面向公众的视图、落地页或嵌入式挂件）应该是独立的。”
 
-Use AskUserQuestion with options:
-- "Inside app shell" - The default for most in-app sections
-- "Standalone (no shell)" - For public pages, landing pages, or embeds
+使用 AskUserQuestion 并提供以下选项：
+- “容器 (Shell) 内” - 大多数应用内模块的默认设置
+- “独立 (不带容器)” - 用于公共页面、落地页或嵌入式内容
 
-If no shell design exists yet, skip this question and default to using the shell.
+如果尚未创建容器设计 (Shell Design)，请跳过此问题并默认使用容器 (Shell)。
 
-## Step 6: Auto-Proceed — Create Spec and Sample Data
+## 第 6 步：自动处理 — 创建规范和示例数据
 
-Once you have enough information from the clarifying questions, **immediately proceed** without asking for approval. Do all of the following in sequence:
+一旦从澄清问题中获得了足够的信息，**立即继续**进行，无需征得许可。按顺序执行以下所有操作：
 
-### 6a: Create the Spec File
+### 6a: 创建规范文件
 
-Create the file at `product/sections/[section-id]/spec.md` with this exact format:
+在 `product/sections/[section-id]/spec.md` 创建文件，采用以下确切格式：
 
 ```markdown
-# [Section Title] Specification
+# [模块标题] 规范
 
-## Overview
-[2-3 sentence summary of what this section does]
+## 概览
+[2-3 句概要，说明此模块的作用]
 
-## User Flows
-- [Flow 1]
-- [Flow 2]
-- [Flow 3]
-[Add all flows discussed]
+## 用户流程
+- [流程 1]
+- [流程 2]
+- [流程 3]
+[添加所有讨论过的流程]
 
-## UI Requirements
-- [Requirement 1]
-- [Requirement 2]
-- [Requirement 3]
-[Add all requirements discussed]
+## UI 要求
+- [要求 1]
+- [要求 2]
+- [要求 3]
+[添加所有讨论过的要求]
 
-## Configuration
+## 配置
 - shell: [true/false]
 ```
 
-**Important:**
-- Set `shell: true` if the section should display inside the app shell (this is the default)
-- Set `shell: false` if the section should display as a standalone page without the shell
-- The section-id is the slug version of the section title (lowercase, hyphens instead of spaces)
-- Don't add features that weren't discussed. Don't leave out features that were discussed.
+**重要提示：**
+- 如果该模块应在容器 (Shell) 内显示，设置 `shell: true`（这是默认值）
+- 如果该模块应作为不带容器的独立页面显示，设置 `shell: false`
+- `section-id` 是模块标题的小写中划线版本（slugify）
+- 不要添加未讨论过的功能。不要遗漏讨论过的功能。
 
-### 6b: Generate Sample Data and Types
+### 6b: 生成示例数据和类型
 
-Immediately after writing the spec, run the full sample data generation process for this section:
+在写入规范后，立即为该模块运行完整的示例数据生成流程：
 
-1. **Check for global data shape** — Read `/product/data-shape/data-shape.md` if it exists. Use entity names and relationships as a guide for consistency.
+1. **检查全局数据模型 (Data Shape)** — 如果存在 `/product/data-shape/data-shape.md`，请阅读它。将实体名称和关系作为保持一致性的参考。
 
-2. **Analyze the spec** — Determine what data entities are implied by the user flows, what fields each entity needs, and what actions can be taken (these become callback props).
+2. **分析规范** — 确定用户流程中暗示了哪些数据实体、每个实体需要哪些字段，以及可以采取哪些操作（这些将转化为 callback props）。
 
-3. **Create `product/sections/[section-id]/data.json`** with:
-   - A `_meta` section with human-readable descriptions of each entity and their relationships
-   - Realistic, believable sample data (not "Lorem ipsum" or "Test 123")
-   - 5-10 sample records for main entities
-   - Varied content: mix short/long text, different statuses
-   - Edge cases: at least one empty array, one long description
-   - TypeScript-friendly structure with consistent field names
+3. **创建 `product/sections/[section-id]/data.json`**，包含：
+   - `_meta` 部分，对每个实体及其关系进行人类可读的描述
+   - 真实、可信的示例数据（不要使用 "Lorem ipsum" 或 "Test 123"）
+   - 为主要实体提供 5-10 条示记录
+   - 内容多样化：混合长短文本、不同的状态
+   - 边界情况：至少包含一个空数组、一个长描述
+   - 具有一致字段名称且对 TypeScript 友好的结构
 
-   Required `_meta` structure:
+   要求的 `_meta` 结构：
    ```json
    {
      "_meta": {
        "models": {
-         "entityName": "Plain-language description of what this entity represents."
+         "entityName": "对该实体所代表含义的平实语言描述。"
        },
        "relationships": [
-         "Description of how models connect to each other"
+         "描述模型之间如何相互连接"
        ]
      }
    }
    ```
 
-4. **Create `product/sections/[section-id]/types.ts`** with:
-   - Data interfaces inferred from sample data (strings, numbers, booleans, arrays, nested objects)
-   - Union types for status/enum fields based on the spec
-   - A Props interface named `[SectionName]Props` with data as props and optional callback props for each action
-   - JSDoc comments on callback props
-   - PascalCase for interface names, camelCase for property names
+4. **创建 `product/sections/[section-id]/types.ts`**，包含：
+   - 从示例数据推断出的数据接口 (数据类型：strings, numbers, booleans, arrays, nested objects)
+   - 基于规范为状态/枚举字段定义联合类型 (Union types)
+   - 一个名为 `[SectionName]Props` 的 Props 接口，包含作为 props 的数据以及针对每个操作的可选回调 props
+   - 在回调 props 上添加 JSDoc 注释
+   - 接口名称使用 PascalCase（大驼峰），属性名称使用 camelCase（小驼峰）
 
-### 6c: Inform the User
+### 6c: 告知用户
 
-After all files are created, present a summary:
+在所有文件创建完成后，展示摘要：
 
-"I've created the following for **[Section Title]**:
+“我已经为 **[模块标题]** 创建了以下内容：
 
-1. **Spec** — `product/sections/[section-id]/spec.md`
-2. **Sample Data** — `product/sections/[section-id]/data.json` ([X] records)
-3. **TypeScript Types** — `product/sections/[section-id]/types.ts`
+1. **规范 (Spec)** — `product/sections/[section-id]/spec.md`
+2. **示例数据** — `product/sections/[section-id]/data.json`（共 [X] 条记录）
+3. **TypeScript 类型** — `product/sections/[section-id]/types.ts`
 
-Here's a quick summary of the spec:
+这是规范的简要摘要：
 
-**Overview:** [2-3 sentence summary]
+**概览：** [2-3 句概要]
 
-**User Flows:** [Brief list]
+**用户流程：** [简要列表]
 
-**Sample data includes:** [Brief description of entities and record counts]
+**示例数据包括：** [实体及其记录计数的简要描述]
 
-Feel free to review these files. Let me know if you'd like to adjust anything in the spec or sample data. When you're ready, run `/design-screen` to create the screen design for this section."
+请随意查看这些文件。如果你想调整规范或示例数据中的任何内容，请告诉我。准备就绪后，可以运行 `/design-screen` 来为此模块创建界面设计 (Design Screen)。”
 
-## Important Notes
+## 重要注意事项
 
-- Be conversational and helpful, not robotic
-- Ask follow-up questions when answers are vague
-- Focus on UX and UI - don't discuss backend, database, or API details
-- Keep the spec concise - only include what was discussed, no bloat
-- The format must match exactly for the app to parse it correctly
-- Do NOT present a draft for approval — go straight to writing the files after gathering enough info
-- If the user requests changes after reviewing, update the relevant files immediately
+- 对话要有帮助，不要像机器人
+- 答案模糊时提出跟进问题
+- 专注于 UX 和 UI —— 不要讨论后端、数据库或 API 细节
+- 保持规范简洁 —— 仅包含讨论过的内容，不要臃肿
+- 格式必须完全匹配，以便应用程序能够正确解析
+- 不要展示草案等待批准 —— 收集足够信息后直接开始写入文件
+- 如果用户在审核后要求更改，请立即更新相关文件

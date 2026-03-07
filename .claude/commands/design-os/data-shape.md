@@ -1,112 +1,112 @@
-# Data Shape
+# 数据模型 (Data Shape)
 
-You are helping the user create or update the general shape of their product's data — the core entities ("nouns") and how they relate to each other. This creates a shared vocabulary that ensures consistency across sections when generating sample data and screen designs. This is not the final data model — it's a starting point that the implementation agent will extend and refine.
+你正在协助用户创建或更新其产品数据的总体模型 (Data Shape) —— 即核心实体（"名词"）及其相互关系。这建立了一个共享词汇表，确保在生成示例数据和界面设计 (Design Screen) 时各模块之间的一致性。这并非最终的数据模型 (Data Shape) —— 而是一个起点，后续实施代理将对其进行扩展和完善。
 
-## Step 1: Check Current State
+## 第 1 步：检查当前状态
 
-First, check if `/product/data-shape/data-shape.md` exists.
+首先，检查 `/product/data-shape/data-shape.md` 是否存在。
 
 ---
 
-## If Data Shape Already Exists (Updating)
+## 如果数据模型 (Data Shape) 已存在 (更新操作)
 
-Read:
+阅读：
 - `/product/data-shape/data-shape.md`
-- `/product/product-overview.md` (if it exists, for context)
-- `/product/product-roadmap.md` (if it exists, for context)
+- `/product/product-overview.md`（如果存在，用于获取背景信息）
+- `/product/product-roadmap.md`（如果存在，用于获取背景信息）
 
-Present the current state and ask what to change:
+展示当前状态并询问需要更改的内容：
 
-"Your data shape currently defines these entities:
+“你的数据模型 (Data Shape) 目前定义了以下实体：
 
-- **[Entity1]** — [Description]
-- **[Entity2]** — [Description]
+- **[实体 1]** — [描述]
+- **[实体 2]** — [描述]
 
-**Relationships:**
-- [Relationship 1]
-- [Relationship 2]
+**关系：**
+- [关系 1]
+- [关系 2]
 
-What would you like to change about the entities or relationships?"
+你想对这些实体或关系进行哪些修改？”
 
-Wait for the user's response describing what they want changed. Once you receive their notes, **immediately proceed** to update `product/data-shape/data-shape.md` based on their requested changes — do not present a draft for approval.
+等待用户描述他们想要更改的内容。一旦收到他们的笔记，**立即继续**根据所要求的更改更新 `product/data-shape/data-shape.md` —— 不要展示草案等待批准。
 
-After updating, inform the user:
+更新后，通知用户：
 
-"I've updated the data shape based on your feedback. Review the changes and let me know if you'd like further adjustments."
+“我已经根据你的反馈更新了数据模型 (Data Shape)。请查看更改，如果需要进一步调整请告诉我。”
 
-Stop here — the remaining steps below are for generating a new data shape from scratch.
+此处停止 —— 以下步骤仅适用于从头开始生成新的数据模型 (Data Shape)。
 
 ---
 
-## If No Data Shape Exists (Creating New)
+## 如果数据模型 (Data Shape) 不存在 (创建新模型)
 
-### Check Prerequisites
+### 检查先决条件
 
-Read:
-1. `/product/product-overview.md` to understand what the product does
-2. `/product/product-roadmap.md` to understand the planned sections
+阅读：
+1. `/product/product-overview.md` 以了解产品的功能
+2. `/product/product-roadmap.md` 以了解计划中的模块
 
-If either file is missing, let the user know:
+如果缺少其中任何一个文件，请通知用户：
 
-"Before defining your data shape, you'll need to establish your product vision. Please run `/product-vision` first."
+“在定义数据模型 (Data Shape) 之前，你需要先建立产品愿景。请先运行 `/product-vision`。”
 
-Stop here if prerequisites are missing.
+如果缺少先决条件，请停止操作。
 
-### Analyze and Generate
+### 分析并生成
 
-Review the product overview and roadmap, then **immediately proceed** to create the data shape file — do not present a draft for approval.
+审查产品概览和路线图，然后**立即继续**创建数据模型文件 —— 不要展示草案等待批准。
 
-Identify:
-- **Entity names** — The main nouns (things users create, view, or manage)
-- **Plain-language descriptions** — What each entity represents
-- **Relationships** — How entities connect to each other
+确定：
+- **实体名称** — 主要名词（用户创建、查看或管理的事物）
+- **平实语言描述** — 每个实体代表什么
+- **关系** — 实体如何相互连接
 
-Create `/product/data-shape/data-shape.md` with this format:
+创建 `/product/data-shape/data-shape.md`，采用以下格式：
 
 ```markdown
-# Data Shape
+# 数据模型 (Data Shape)
 
-## Entities
+## 实体
 
-### [EntityName]
-[Plain-language description of what this entity represents and its purpose in the system.]
+### [实体名称]
+[这种实体代表什么的平实语言描述及其在系统中的目的。]
 
-### [AnotherEntity]
-[Plain-language description.]
+### [另一个实体]
+[平实语言描述。]
 
-[Add more entities as needed]
+[根据需要添加更多实体]
 
-## Relationships
+## 关系
 
-- [Entity1] has many [Entity2]
-- [Entity2] belongs to [Entity1]
-- [Entity3] belongs to both [Entity1] and [Entity2]
-[Add more relationships as needed]
+- [实体 1] 拥有多个 [实体 2]
+- [实体 2] 属于 [实体 1]
+- [实体 3] 同时属于 [实体 1] 和 [实体 2]
+[根据需要添加更多关系]
 ```
 
-### Confirm
+### 确认
 
-"I've created your data shape at `/product/data-shape/data-shape.md`.
+“我已经为你创建了数据模型 (Data Shape)，位于 `/product/data-shape/data-shape.md`。
 
-**Entities defined:**
-- [List entities]
+**定义的实体：**
+- [列出实体]
 
-**Relationships:**
-- [List key relationships]
+**关系：**
+- [列出关键关系]
 
-This provides a shared vocabulary for your screen designs. When you run `/sample-data`, it will reference these entities to ensure consistent naming across sections.
+这为你的界面设计 (Design Screen) 提供了共享词汇表。当你运行 `/sample-data` 时，它将引用这些实体，以确保各模块之间的命名一致。
 
-Review and let me know if you'd like to adjust anything. When you're ready, run `/design-tokens` to choose your color palette and typography."
+请查看并告知我是否需要调整任何内容。准备就绪后，运行 `/design-tokens` 来选择你的色板和排版风格。”
 
 ---
 
-## Important Notes
+## 重要注意事项
 
-- Keep it **minimal** — entity names, descriptions, and relationships
-- Do NOT define detailed schemas, field types, or validation rules
-- Use plain language that a non-technical person could understand
-- Relationships are conceptual — they describe how data relates from the user's perspective, not database structure
-- The implementation agent will decide how to model, store, and extend these entities
-- Entity names should be singular (User, Invoice, Project — not Users, Invoices)
-- Do NOT present a draft for approval — generate the file immediately and let the user review after
-- If the user requests changes after reviewing, update the file immediately
+- 保持**简洁** —— 实体名称、描述和关系即可
+- 不要定义详细的 Schema、字段类型或验证规则
+- 使用非技术人员也能理解的平实语言
+- 关系是概念性的 —— 它们描述了从用户视角看数据如何关联，而非数据库模型
+- 实施代理将决定如何建模、存储和扩展这些实体
+- 实体名称应为单数（User, Invoice, Project —— 而不是 Users, Invoices）
+- 不要展示草案等待批准 —— 立即生成文件并让用户随后审核
+- 如果用户在审核后要求更改，请立即更新文件

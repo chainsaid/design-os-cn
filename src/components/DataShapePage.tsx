@@ -19,10 +19,10 @@ export function DataShapePage() {
         {/* Page intro */}
         <div className="mb-8">
           <h1 className="text-2xl font-semibold text-stone-900 dark:text-stone-100 mb-2">
-            Data Shape
+            数据模型
           </h1>
           <p className="text-stone-600 dark:text-stone-400">
-            Sketch out the general shape of your product's data — the core entities and how they relate.
+            勾勒产品数据的一般结构——核心实体及其关系。
           </p>
         </div>
 
@@ -36,7 +36,7 @@ export function DataShapePage() {
               <Card className="border-stone-200 dark:border-stone-700 shadow-sm">
                 <CardHeader>
                   <CardTitle className="text-lg font-semibold text-stone-900 dark:text-stone-100">
-                    Entities
+                    实体
                     <span className="ml-2 text-sm font-normal text-stone-500 dark:text-stone-400">
                       ({dataShape.entities.length})
                     </span>
@@ -44,7 +44,7 @@ export function DataShapePage() {
                 </CardHeader>
                 <CardContent>
                   {dataShape.entities.length === 0 ? (
-                    <p className="text-stone-500 dark:text-stone-400">No entities defined.</p>
+                    <p className="text-stone-500 dark:text-stone-400">未定义实体。</p>
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {dataShape.entities.map((entity, index) => (
@@ -69,7 +69,7 @@ export function DataShapePage() {
               <Card className="border-stone-200 dark:border-stone-700 shadow-sm">
                 <CardHeader>
                   <CardTitle className="text-lg font-semibold text-stone-900 dark:text-stone-100">
-                    Relationships
+                    关系
                     <span className="ml-2 text-sm font-normal text-stone-500 dark:text-stone-400">
                       ({dataShape.relationships.length})
                     </span>
@@ -77,7 +77,7 @@ export function DataShapePage() {
                 </CardHeader>
                 <CardContent>
                   {dataShape.relationships.length === 0 ? (
-                    <p className="text-stone-500 dark:text-stone-400">No relationships defined.</p>
+                    <p className="text-stone-500 dark:text-stone-400">未定义关系。</p>
                   ) : (
                     <ul className="space-y-2">
                       {dataShape.relationships.map((relationship, index) => (
@@ -96,9 +96,9 @@ export function DataShapePage() {
               {/* Edit hint */}
               <div className="bg-stone-100 dark:bg-stone-800 rounded-md px-4 py-3">
                 <p className="text-sm text-stone-600 dark:text-stone-400">
-                  To update the data shape, run{' '}
+                  运行{' '}
                   <code className="font-mono text-stone-800 dark:text-stone-200">/data-shape</code>{' '}
-                  or edit the file directly at{' '}
+                  更新数据模型，或直接编辑文件{' '}
                   <code className="font-mono text-stone-800 dark:text-stone-200">
                     product/data-shape/data-shape.md
                   </code>

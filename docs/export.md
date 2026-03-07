@@ -1,130 +1,136 @@
-# Export
+# 导出 (Export)
 
-When your designs are complete, export everything your implementation agent (or team) needs to build the product.
+当你完成设计后，可以导出实施代理（AI 编码代理或团队）构建产品所需的一切。
 
-## When to Export
+## 何时导出
 
-You're ready to export when:
+当满足以下条件时，你已准备好导出：
 
-- Product vision and roadmap are defined
-- At least one section has screen designs
-- You're satisfied with the design direction
+- 已定义产品愿景 (Product Vision) 和路线图 (Product Roadmap)。
+- 至少有一个模块拥有界面设计 (Design Screen)。
+- 你对设计方向感到满意。
 
-You can export at any point—it doesn't have to be "complete." Exporting generates a snapshot of your current designs. You can always export again later as you add more sections.
+你可以在任何时间点导出 —— 不必等到“完全完成”。导出将生成你当前设计的快照。随着后续添加更多模块，你可以随时再次导出。
 
-## Running the Export
+---
+
+## 运行导出
 
 ```
 /export-product
 ```
 
-The export command:
+该导出命令会：
 
-1. **Checks prerequisites** — Verifies required files exist
-2. **Gathers all design assets** — Components, types, data, tokens
-3. **Generates implementation instructions** — Including ready-to-use prompts
-4. **Generates test instructions** — TDD specs for each section
-5. **Creates the export package** — A complete `product-plan/` directory
-6. **Creates a zip file** — `product-plan.zip` for easy download
+1. **检查先决条件** — 验证必需文件是否存在。
+2. **收集所有设计资源** — 组件、类型、数据、原子设计 (Design Tokens)。
+3. **生成实施指令** — 包括拿来即用的提示词（Prompts）。
+4. **生成测试指令** — 为每个模块提供测试驱动开发（TDD）规范。
+5. **创建导出包** — 生成完整的 `product-plan/` 目录。
+6. **创建 Zip 文件** — 生成 `product-plan.zip` 以便下载。
 
-## What's Included
+---
 
-### Ready-to-Use Prompts
+## 包含内容
+
+### 拿来即用的提示词 (Prompts)
 
 ```
 product-plan/prompts/
-├── one-shot-prompt.md     # Prompt for full implementation
-└── section-prompt.md      # Prompt template for section-by-section
+├── one-shot-prompt.md     # 全量实施演示提示词
+└── section-prompt.md      # 模块化实施的提示词模板
 ```
 
-These are pre-written prompts you copy/paste into your coding agent. They reference the instruction files and guide your agent to review the designs and ask clarifying questions before implementing.
+这些是预先写好的提示词，你可以直接复制并粘贴到你的编码代理中。它们会引用指令文件，并引导你的代理在实施前审查设计并提出澄清性问题。
 
-### Instructions
+### 实施指南 (Instructions)
 
 ```
 product-plan/
-├── product-overview.md              # Product summary (always provide)
+├── product-overview.md              # 产品摘要（始终提供）
 └── instructions/
-    ├── one-shot-instructions.md     # All milestones combined
-    └── incremental/                 # Milestone-by-milestone implementation
-        ├── 01-shell.md              # Design tokens + application shell
-        ├── 02-[section-id].md        # One per section (e.g., 02-invoices.md)
+    ├── one-shot-instructions.md     # 合并的所有里程碑指南
+    └── incremental/                 # 按里程碑划分的实施指南
+        ├── 01-shell.md              # 原子设计 (Design Tokens) + 容器 (Shell)
+        ├── 02-[section-id].md        # 每个模块一个 (如 02-invoices.md)
         └── ...
 ```
 
-**product-overview.md** provides context about the full product—always include it with any implementation session.
+**product-overview.md** 提供了关于完整产品的背景信息 —— 请在任何实施会话中始终携带它。
 
-**one-shot-instructions.md** combines all milestones into a single document. Use this with `one-shot-prompt.md` for full implementation.
+**one-shot-instructions.md** 将所有里程碑合并为一个文档。搭配 `one-shot-prompt.md` 进行全量实施。
 
-**Incremental instructions** break the work into milestones. Use these with `section-prompt.md` for step-by-step implementation.
+**里程碑式指令 (Incremental instructions)** 将工作分解为多个里程碑。搭配 `section-prompt.md` 进行循序渐进的实施。
 
-### Design System
+### 设计系统 (Design System)
 
 ```
 product-plan/design-system/
-├── tokens.css           # CSS custom properties
-├── tailwind-colors.md   # Tailwind configuration guide
-└── fonts.md             # Google Fonts setup
+├── tokens.css           # CSS 自定义变量 (Properties)
+├── tailwind-colors.md   # Tailwind 配置指南
+└── fonts.md             # Google Fonts 设置
 ```
 
-### Data Shapes
+### 数据模型 (Data Shape)
 
 ```
 product-plan/data-shapes/
-├── README.md            # UI data contracts overview
-└── overview.ts          # Combined type reference (all sections)
+├── README.md            # UI 数据契约概览
+└── overview.ts          # 合并的类型引用（包含所有模块）
 ```
 
-### Shell Components
+### 容器组件 (Shell Components)
 
 ```
 product-plan/shell/
-├── README.md            # Design intent
+├── README.md            # 设计意图
 ├── components/
-│   ├── AppShell.tsx     # Main layout wrapper
-│   ├── MainNav.tsx      # Navigation
-│   ├── UserMenu.tsx     # User menu
-│   └── index.ts         # Exports
-└── screenshot.png       # Visual reference (if captured)
+│   ├── AppShell.tsx     # 主布局包装器
+│   ├── MainNav.tsx      # 导航
+│   ├── UserMenu.tsx     # 用户菜单
+│   └── index.ts         # 导出索引
+└── screenshot.png       # 视觉参考（如果已截图）
 ```
 
-### Section Components
+### 模块组件 (Section Components)
 
-For each section:
+针对每个模块：
 
 ```
 product-plan/sections/[section-id]/
-├── README.md            # Feature overview, user flows
-├── tests.md             # UI behavior test specs
+├── README.md            # 功能概览、用户流程
+├── tests.md             # UI 行为测试规范
 ├── components/
-│   ├── [Component].tsx  # Exportable components
-│   └── index.ts         # Exports
-├── types.ts             # TypeScript interfaces
-├── sample-data.json     # Test data
-└── screenshot.png       # Visual reference (if captured)
+│   ├── [Component].tsx  # 可导出组件
+│   └── index.ts         # 导出索引
+├── types.ts             # TypeScript 接口
+├── sample-data.json     # 测试数据
+└── screenshot.png       # 视觉参考（如果已截图）
 ```
 
-### Test Instructions
+### 测试指令 (Test Instructions)
 
-Each section includes a `tests.md` file with framework-agnostic test-writing instructions:
+每个模块都包含一个 `tests.md` 文件，提供了框架无关的测试编写指令：
 
-- **User flow tests** — Success and failure paths for key interactions
-- **Empty state tests** — Verifying UI when no records exist
-- **Component interaction tests** — Specific UI elements and behaviors to verify
+- **用户流程测试** — 核心交互的成功和失败路径。
+- **空状态测试** — 验证无记录时的 UI。
+- **组件交互测试** — 需要验证的具体 UI 元素和行为。
 
-These instructions describe WHAT to test, not HOW—your coding agent adapts them to your test framework (Jest, Vitest, Playwright, Cypress, RSpec, Minitest, PHPUnit, etc.).
+这些指令描述了**测试什么**，而不是**如何测试** —— 你的编码代理会将其适配到你的测试框架（如 Jest, Vitest, Playwright, Cypress, RSpec, Minitest, PHPUnit 等）。
 
-## About the Components
+---
 
-Exported components are:
+## 关于组件
 
-- **Props-based** — Accept data and callbacks via props, never import data directly
-- **Portable** — Work with any React setup, no Design OS dependencies
-- **Complete** — Full styling, responsive design, dark mode support
-- **Production-ready** — Not prototypes or mockups
+导出的组件具有以下特点：
+
+- **基于 Props** — 通过 props 接收数据和回调，严禁直接从组件内部导入数据。
+- **可移植** — 适用于任何 React 环境，无 Design OS 依赖。
+- **完整性** — 完整的样式、响应式设计、支持暗色模式。
+- **生产级** — 并非单纯的原型或视觉稿，而是可生产使用的代码。
 
 ```tsx
-// Components expect data and callbacks as props
+// 组件期望数据和回调作为 props 传入
 <InvoiceList
   invoices={data}
   onView={(id) => navigate(`/invoices/${id}`)}
@@ -134,14 +140,16 @@ Exported components are:
 />
 ```
 
-Your implementation agent's job is to:
-- Wire up callbacks to routing and API calls
-- Replace sample data with real data from your backend
-- Implement proper error handling and loading states
-- Implement empty states when no records exist (first-time users, after deletions)
-- Build the backend APIs the components need
-- Write tests based on the provided test instructions (TDD approach)
+你的实施代理的任务是：
+- 将回调连接到路由和 API 调用。
+- 用后端真实数据替换示例数据。
+- 实现适当的错误处理和加载状态。
+- 实现无记录时的空状态（针对新用户、删除记录后等场景）。
+- 构建组件所需的后端 API。
+- 根据提供的测试指令编写测试（TDD 方式）。
 
-## Using the Export
+---
 
-See [Codebase Implementation](codebase-implementation.md) for detailed guidance on implementing your design in your codebase.
+## 使用导出包
+
+详情请参阅 [在代码库中实施](codebase-implementation.md)，了解如何将你的设计在实际代码库中落地的详细指导。

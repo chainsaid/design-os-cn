@@ -15,57 +15,57 @@ const config: Record<EmptyStateType, {
 }> = {
   overview: {
     icon: FileText,
-    title: 'No product defined yet',
+    title: '尚未定义产品',
     command: '/product-vision',
-    description: 'Define your product vision, key problems, and features',
+    description: '定义产品愿景、核心问题和功能特性',
   },
   roadmap: {
     icon: Map,
-    title: 'No roadmap defined yet',
+    title: '尚未定义路线图',
     command: '/product-roadmap',
-    description: 'Break down your product into development sections',
+    description: '将产品拆分为开发模块',
   },
   spec: {
     icon: ClipboardList,
-    title: 'No specification defined yet',
+    title: '尚未定义规范',
     command: '/shape-section',
-    description: 'Define the user flows and UI requirements',
+    description: '定义用户流程和 UI 要求',
   },
   data: {
     icon: Database,
-    title: 'No sample data generated yet',
+    title: '尚未生成示例数据',
     command: '/sample-data',
-    description: 'Create realistic sample data for screen designs',
+    description: '为界面设计创建真实示例数据',
   },
   'screen-designs': {
     icon: Layout,
-    title: 'No screen designs created yet',
+    title: '尚未创建界面设计',
     command: '/design-screen',
-    description: 'Create screen designs for this section',
+    description: '为此模块创建界面设计',
   },
   'data-shape': {
     icon: Boxes,
-    title: 'No data shape defined yet',
+    title: '尚未定义数据模型',
     command: '/data-shape',
-    description: 'Sketch out the general shape of your product\'s data',
+    description: '勾勒产品数据的一般结构',
   },
   'design-system': {
     icon: Palette,
-    title: 'No design tokens defined yet',
+    title: '尚未定义原子设计',
     command: '/design-tokens',
-    description: 'Choose colors and typography for your product',
+    description: '选择产品的颜色和字体',
   },
   shell: {
     icon: PanelLeft,
-    title: 'No application shell designed yet',
+    title: '尚未设计应用容器',
     command: '/design-shell',
-    description: 'Design the navigation and layout',
+    description: '设计导航和布局',
   },
   export: {
     icon: Package,
-    title: 'Ready to export',
+    title: '准备导出',
     command: '/export-product',
-    description: 'Generate the complete handoff package',
+    description: '生成完整的交接包',
   },
 }
 
@@ -87,7 +87,7 @@ export function EmptyState({ type }: EmptyStateProps) {
           </p>
           <div className="bg-stone-100 dark:bg-stone-800 rounded-md px-4 py-2.5 w-full">
             <p className="text-xs text-stone-500 dark:text-stone-400 mb-0.5">
-              Run in Claude Code:
+              在 Claude Code 中运行：
             </p>
             <code className="text-sm font-mono text-stone-700 dark:text-stone-300">
               {command}

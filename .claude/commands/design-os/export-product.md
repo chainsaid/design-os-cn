@@ -1,1028 +1,623 @@
-# Export Product
+# 产品导出 (Export Product)
 
-You are helping the user export their complete product design as a handoff package for implementation. This generates all files needed to integrate the UI designs into a real codebase.
+你正在协助用户将其完整的产品设计导出为交付包（Handoff Package）以供实施。这将生成将 UI 设计集成到真实代码库所需的所有文件。
 
-## Step 1: Check Prerequisites
+## 第 1 步：检查先决条件
 
-Verify the minimum requirements exist:
+确认是否满足最低要求：
 
-**Required:**
-- `/product/product-overview.md` — Product overview
-- `/product/product-roadmap.md` — Sections defined
-- At least one section with screen designs in `src/sections/[section-id]/`
+**必需：**
+- `/product/product-overview.md` — 产品概览
+- `/product/product-roadmap.md` — 已定义的模块
+- 至少有一个模块在 `src/sections/[section-id]/` 中拥有界面设计 (Design Screen)
 
-**Recommended (show warning if missing):**
-- `/product/data-shape/data-shape.md` — Product entities
-- `/product/design-system/colors.json` — Color tokens
-- `/product/design-system/typography.json` — Typography tokens
-- `src/shell/components/AppShell.tsx` — Application shell
+**建议（如果缺失则显示警告）：**
+- `/product/data-shape/data-shape.md` — 产品实体
+- `/product/design-system/colors.json` — 颜色原子 (Tokens)
+- `/product/design-system/typography.json` — 排版原子 (Tokens)
+- `src/shell/components/AppShell.tsx` — 容器 (Shell)
 
-If required files are missing:
+如果缺少必需文件：
 
-"To export your product, you need at minimum:
-- A product overview (`/product-vision`)
-- A roadmap with sections (`/product-roadmap`)
-- At least one section with screen designs
+“要导出你的产品，你至少需要：
+- 产品概览 (`/product-vision`)
+- 包含模块的路线图 (`/product-roadmap`)
+- 至少一个带有界面设计 (Design Screen) 的模块
 
-Please complete these first."
+请先完成这些内容。”
 
-Stop here if required files are missing.
+如果缺少必需文件，请停止操作。
 
-If recommended files are missing, show warnings but continue:
+如果缺少建议的文件，显示警告但继续进行：
 
-"Note: Some recommended items are missing:
-- [ ] Product entities — Run `/data-shape` for consistent entity naming
-- [ ] Design tokens — Run `/design-tokens` for consistent styling
-- [ ] Application shell — Run `/design-shell` for navigation structure
+“注意：缺少一些建议项：
+- [ ] 产品实体 — 运行 `/data-shape` 以获得一致的实体命名
+- [ ] 原子设计 (Design Tokens) — 运行 `/design-tokens` 以获得一致的风格
+- [ ] 容器设计 (Shell Design) — 运行 `/design-shell` 以获得导航结构
 
-You can proceed without these, but they help ensure a complete handoff."
+你可以继续导出，但这些项有助于确保交付的完整性。”
 
-## Step 2: Gather Export Information
+## 第 2 步：收集导出信息
 
-Read all relevant files:
+阅读所有相关文件：
 
-1. `/product/product-overview.md` — Product name, description, features
-2. `/product/product-roadmap.md` — List of sections in order
-3. `/product/data-shape/data-shape.md` (if exists)
-4. `/product/design-system/colors.json` (if exists)
-5. `/product/design-system/typography.json` (if exists)
-6. `/product/shell/spec.md` (if exists)
-7. For each section: `spec.md`, `data.json`, `types.ts`
-8. List screen design components in `src/sections/` and `src/shell/`
+1. `/product/product-overview.md` — 产品名称、描述、功能
+2. `/product/product-roadmap.md` — 按顺序排列的模块列表
+3. `/product/data-shape/data-shape.md` (如果存在)
+4. `/product/design-system/colors.json` (如果存在)
+5. `/product/design-system/typography.json` (如果存在)
+6. `/product/shell/spec.md` (如果存在)
+7. 针对每个模块：`spec.md`, `data.json`, `types.ts`
+8. 列出 `src/sections/` 和 `src/shell/` 中的界面设计 (Design Screen) 组件
 
-## Step 3: Create Export Directory Structure
+## 第 3 步：创建导出目录结构
 
-Create the `product-plan/` directory with this structure:
+创建 `product-plan/` 目录，其结构如下：
 
 ```
 product-plan/
-├── README.md                    # Quick start guide
-├── product-overview.md          # Product summary (always provide)
+├── README.md                    # 快速入门指南
+├── product-overview.md          # 产品摘要（始终提供）
 │
-├── prompts/                     # Ready-to-use prompts for coding agents
-│   ├── one-shot-prompt.md       # Prompt for full implementation
-│   └── section-prompt.md        # Prompt template for section-by-section
+├── prompts/                     # 供编码代理使用的就绪提示词
+│   ├── one-shot-prompt.md       # 全量实施演示提示词
+│   └── section-prompt.md        # 模块化实施的提示词模板
 │
-├── instructions/                # Implementation instructions
-│   ├── one-shot-instructions.md # All milestones combined
-│   └── incremental/             # For milestone-by-milestone implementation
+├── instructions/                # 实施指南
+│   ├── one-shot-instructions.md # 合并的所有里程碑指南
+│   └── incremental/             # 按里程碑划分的实施指南
 │       ├── 01-shell.md
-│       ├── 02-[first-section].md
-│       ├── 03-[second-section].md
+│       ├── 02-[第一个模块].md
+│       ├── 03-[第二个模块].md
 │       └── ...
 │
-├── design-system/               # Design tokens
+├── design-system/               # 原子设计 (Design Tokens)
 │   ├── tokens.css
 │   ├── tailwind-colors.md
 │   └── fonts.md
 │
-├── data-shapes/                 # UI data contracts
+├── data-shapes/                 # UI 数据契约
 │   ├── README.md
 │   └── overview.ts
 │
-├── shell/                       # Shell components
+├── shell/                       # 容器组件
 │   ├── README.md
 │   ├── components/
 │   │   ├── AppShell.tsx
 │   │   ├── MainNav.tsx
 │   │   ├── UserMenu.tsx
 │   │   └── index.ts
-│   └── screenshot.png (if exists)
+│   └── screenshot.png (如果存在)
 │
-└── sections/                    # Section components
+└── sections/                    # 模块组件
     └── [section-id]/
         ├── README.md
-        ├── tests.md               # UI behavior test specs
+        ├── tests.md               # UI 行为测试规范
         ├── components/
         │   ├── [Component].tsx
         │   └── index.ts
         ├── types.ts
         ├── sample-data.json
-        └── screenshot.png (if exists)
+        └── screenshot.png (如果存在)
 ```
 
-## Step 4: Generate product-overview.md
+## 第 4 步：生成 product-overview.md
 
-Create `product-plan/product-overview.md`:
+创建 `product-plan/product-overview.md`：
 
 ```markdown
-# [Product Name] — Product Overview
+# [产品名称] — 产品概览
 
-## Summary
+## 摘要
 
-[Product description from product-overview.md]
+[来自 product-overview.md 的产品描述]
 
-## Planned Sections
+## 计划模块
 
-[Ordered list of sections from roadmap with descriptions]
+[来自路线图的排序列表，包含描述]
 
-1. **[Section 1]** — [Description]
-2. **[Section 2]** — [Description]
+1. **[模块 1]** — [描述]
+2. **[模块 2]** — [描述]
 ...
 
-## Product Entities
+## 产品实体
 
-[If data shape exists: list entity names and brief descriptions]
-[If not: "Entities to be defined during implementation"]
+[如果存在数据模型 (Data Shape)：列出实体名称和简要描述]
+[如果不存在：“实体将在实施过程中定义”]
 
-## Design System
+## 原子设计 (Design Tokens)
 
-**Colors:**
-- Primary: [color or "Not defined"]
-- Secondary: [color or "Not defined"]
-- Neutral: [color or "Not defined"]
+**颜色：**
+- 主色: [颜色 或 “未定义”]
+- 辅助色: [颜色 或 “未定义”]
+- 中性色: [颜色 或 “未定义”]
 
-**Typography:**
-- Heading: [font or "Not defined"]
-- Body: [font or "Not defined"]
-- Mono: [font or "Not defined"]
+**排版字体：**
+- 标题: [字体 或 “未定义”]
+- 正文: [字体 或 “未定义”]
+- 等宽: [字体 或 “未定义”]
 
-## Implementation Sequence
+## 实施序列
 
-Build this product in milestones:
+分里程碑构建此产品：
 
-1. **Shell** — Set up design tokens and application shell
-2. **[Section 1]** — [Brief description]
-3. **[Section 2]** — [Brief description]
+1. **容器 (Shell)** — 设置原子设计 (Design Tokens) 和容器设计 (Shell Design)
+2. **[模块 1]** — [简要描述]
+3. **[模块 2]** — [简要描述]
 ...
 
-Each milestone has a dedicated instruction document in `product-plan/instructions/`.
+每个里程碑在 `product-plan/instructions/` 中都有专门的指南文档。
 ```
 
-## Step 5: Generate Milestone Instructions
+## 第 5 步：生成里程碑指南
 
-Each milestone instruction file should begin with the following preamble (adapt the milestone-specific details):
+每个里程碑指南文档都应以以下前言开头（根据具体里程碑调整细节）：
 
 ```markdown
 ---
 
-## About This Handoff
+## 关于本次交付
 
-**What you're receiving:**
-- Finished UI designs (React components with full styling)
-- Product requirements and user flow specifications
-- Design system tokens (colors, typography)
-- Sample data showing the shape of data components expect
-- Test specs focused on user-facing behavior
+**你收到的是：**
+- 已完成的 UI 设计（带完整样式的 React 组件）
+- 产品要求和用户流程规范
+- 原子设计 (Design Tokens)（颜色、排版）
+- 展示组件期望数据格式的示例数据
+- 专注于用户端行为的测试规范
 
-**Your job:**
-- Integrate these components into your application
-- Wire up callback props to your routing and business logic
-- Replace sample data with real data from your backend
-- Implement loading, error, and empty states
+**你的工作：**
+- 将这些组件集成到你的应用程序中
+- 将回调 props 连接到你的路由和业务逻辑
+- 用来自后端的真实数据替换示例数据
+- 实现加载中、错误及空状态
 
-The components are props-based — they accept data and fire callbacks. How you architect the backend, data layer, and business logic is up to you.
+这些组件是基于 props 的 —— 它们接受数据并触发回调。如何构建后端、数据层和业务逻辑由你决定。
 
 ---
 ```
 
 ### 01-shell.md
 
-Place in `product-plan/instructions/incremental/01-shell.md`:
+存放在 `product-plan/instructions/incremental/01-shell.md`：
 
 ```markdown
-# Milestone 1: Shell
+# 里程碑 1：容器 (Shell)
 
-> **Provide alongside:** `product-overview.md`
-> **Prerequisites:** None
+> **配套提供：** `product-overview.md`
+> **先决条件：** 无
 
-[Include the preamble above]
+[包含上述前言]
 
-## Goal
+## 目标
 
-Set up the design tokens and application shell — the persistent chrome that wraps all sections.
+设置原子设计 (Design Tokens) 和容器设计 (Shell Design) —— 包装所有模块的持久框架。
 
-## What to Implement
+## 需要实现的内容
 
-### 1. Design Tokens
+### 1. 原子设计 (Design Tokens)
 
-[If design tokens exist:]
-Configure your styling system with these tokens:
+[如果存在原子设计 (Design Tokens)：]
+使用这些原子 (Tokens) 配置你的样式系统：
 
-- See `product-plan/design-system/tokens.css` for CSS custom properties
-- See `product-plan/design-system/tailwind-colors.md` for Tailwind configuration
-- See `product-plan/design-system/fonts.md` for Google Fonts setup
+- CSS 变量见 `product-plan/design-system/tokens.css`
+- Tailwind 配置见 `product-plan/design-system/tailwind-colors.md`
+- Google Fonts 设置见 `product-plan/design-system/fonts.md`
 
-[If not:]
-Define your own design tokens based on your brand guidelines.
+[如果不存在：]
+根据你的品牌准则定义自己的原子设计 (Design Tokens)。
 
-### 2. Application Shell
+### 2. 容器设计 (Shell Design)
 
-[If shell exists:]
+[如果存在容器 (Shell)：]
 
-Copy the shell components from `product-plan/shell/components/` to your project:
+将 `product-plan/shell/components/` 中的容器组件复制到你的项目中：
 
-- `AppShell.tsx` — Main layout wrapper
-- `MainNav.tsx` — Navigation component
-- `UserMenu.tsx` — User menu with avatar
+- `AppShell.tsx` — 主容器包装器
+- `MainNav.tsx` — 导航组件
+- `UserMenu.tsx` — 带头像的用户菜单
 
-**Wire Up Navigation:**
+**连接导航：**
 
-Connect navigation to your routing:
+将导航连接到你的路由系统：
 
-[List nav items from shell spec]
+[列出外壳规范中的导航项]
 
-**User Menu:**
+**用户菜单：**
 
-The user menu expects:
-- User name
-- Avatar URL (optional)
-- Logout callback
+用户菜单预期接收：
+- 用户姓名
+- 头像 URL（可选）
+- 退出登录回调
 
-[If shell doesn't exist:]
+[如果容器不存在：]
 
-Design and implement your own application shell with:
-- Navigation for all sections
-- User menu
-- Responsive layout
+自行设计并实现一个容器 (Shell)，包含：
+- 涵盖所有模块的导航
+- 用户菜单
+- 响应式布局
 
-## Files to Reference
+## 需参考的文件
 
-- `product-plan/design-system/` — Design tokens
-- `product-plan/shell/README.md` — Shell design intent
-- `product-plan/shell/components/` — Shell React components
-- `product-plan/shell/screenshot.png` — Shell visual reference
+- `product-plan/design-system/` — 原子设计 (Design Tokens)
+- `product-plan/shell/README.md` — 容器设计意图
+- `product-plan/shell/components/` — 容器 React 组件
+- `product-plan/shell/screenshot.png` — 设计效果图
 
-## Done When
+## 完成标准
 
-- [ ] Design tokens are configured
-- [ ] Shell renders with navigation
-- [ ] Navigation links to correct routes
-- [ ] User menu shows user info
-- [ ] Responsive on mobile
+- [ ] 原子设计 (Design Tokens) 已配置
+- [ ] 容器带着导航栏正常渲染
+- [ ] 导航链接指向正确的路由
+- [ ] 用户菜单显示用户信息
+- [ ] 移动端适配正常
 ```
 
-### [NN]-[section-id].md (for each section)
+### [NN]-[section-id].md (针对每个模块)
 
-Place in `product-plan/instructions/incremental/[NN]-[section-id].md` (starting at 02 for the first section):
+存放在 `product-plan/instructions/incremental/[NN]-[section-id].md`（第一个模块从 02 开始）：
 
 ```markdown
-# Milestone [N]: [Section Title]
+# 里程碑 [N]：[模块标题]
 
-> **Provide alongside:** `product-overview.md`
-> **Prerequisites:** Milestone 1 (Shell) complete, plus any prior section milestones
+> **配套提供：** `product-overview.md`
+> **先决条件：** 里程碑 1 (Shell) 已完成，以及之前的模块里程碑已完成
 
-[Include the preamble above]
+[包含上述前言]
 
-## Goal
+## 目标
 
-Implement the [Section Title] feature — [brief description from roadmap].
+实现 [模块标题] 功能 —— [来自路线图的简要描述]。
 
-## Overview
+## 概览
 
-[One paragraph describing what this section enables users to do. Focus on the user's perspective and the value they get from this feature. Extract from spec.md overview.]
+[一段描述此模块允许用户做什么的内容。从用户视角出发，体现其价值。提取自 spec.md 概览。]
 
-**Key Functionality:**
-- [Bullet point 1 — e.g., "View a list of all projects with status indicators"]
-- [Bullet point 2 — e.g., "Create new projects with name, description, and due date"]
-- [Bullet point 3 — e.g., "Edit existing project details inline"]
-- [Bullet point 4 — e.g., "Delete projects with confirmation"]
-- [Bullet point 5 — e.g., "Filter projects by status or search by name"]
+**关键功能点：**
+- [功能点 1 — 例如，“查看所有项目的列表及其状态指示器”]
+- [功能点 2 — 例如，“创建包含名称、描述和截止日期的新项目”]
+...
 
-[List 3-6 key capabilities that the UI components support]
+[列出 3-6 个 UI 组件支持的关键能力]
 
-## Components Provided
+## 提供的组件
 
-Copy the section components from `product-plan/sections/[section-id]/components/`:
+从 `product-plan/sections/[section-id]/components/` 复制模块组件：
 
-[List components with brief descriptions]
+[列出组件及其简要说明]
 
-## Props Reference
+## Props 参考
 
-The components expect these data shapes (see `types.ts` for full definitions):
+组件期望以下数据模型 (Data Shape)（详见 `types.ts`）：
 
-**Data props:**
+**数据 Props：**
 
-[Key types from types.ts — show the main interfaces briefly]
+[来自 types.ts 的关键类型 — 简要展示主接口]
 
-**Callback props:**
+**回调 Props：**
 
-| Callback | Triggered When |
+| 回调 | 触发时机 |
 |----------|---------------|
-| `onView` | User clicks to view details |
-| `onEdit` | User clicks to edit |
-| `onDelete` | User clicks to delete |
-| `onCreate` | User clicks to create new |
+| `onView` | 用户点击查看详情时 |
+| `onEdit` | 用户点击编辑时 |
+| `onDelete` | 用户点击删除时 |
+| `onCreate` | 用户点击创建新项时 |
 
-[Adjust based on actual Props interface]
+[根据实际 Props 接口进行调整]
 
-## Expected User Flows
+## 预期用户流程
 
-When fully implemented, users should be able to complete these flows:
+完整实现后，用户应能完成以下流程：
 
-### Flow 1: [Primary Flow Name — e.g., "Create a New Project"]
+### 流程 1：[主要流程名称 — 例如，“创建一个新项目”]
 
-1. User [starting action — e.g., "clicks 'New Project' button"]
-2. User [next step — e.g., "fills in project name and description"]
-3. User [next step — e.g., "clicks 'Create' to save"]
-4. **Outcome:** [Expected result — e.g., "New project appears in the list"]
+1. 用户 [开始动作 — 例如，“点击‘新项目’按钮”]
+2. 用户 [下一步 — 例如，“填写项目名称和描述”]
+3. 用户 [下一步 — 例如，“点击‘创建’保存”]
+4. **结果：** [预期结果 — 例如，“新项目显示在列表中”]
 
-### Flow 2: [Secondary Flow Name — e.g., "Edit an Existing Project"]
+...
 
-1. User [starting action — e.g., "clicks on a project row"]
-2. User [next step — e.g., "modifies the project details"]
-3. User [next step — e.g., "clicks 'Save' to confirm changes"]
-4. **Outcome:** [Expected result — e.g., "Project updates in place"]
+[包含 2-4 个涵盖该模块主要用户旅程的流程。参考组件中的具体 UI 元素和按钮标签。]
 
-### Flow 3: [Additional Flow — e.g., "Delete a Project"]
+## 空状态 (Empty States)
 
-1. User [starting action — e.g., "clicks delete icon on a project"]
-2. User [next step — e.g., "confirms deletion in the modal"]
-3. **Outcome:** [Expected result — e.g., "Project removed from list, empty state shown if last item"]
+组件包含空状态设计。请务必处理：
 
-[Include 2-4 flows covering the main user journeys in this section. Reference the specific UI elements and button labels from the components.]
+- **尚无数据：** 当主列表/集合为空时显示空状态 UI
+- **无关联记录：** 处理关联记录不存在的情况（例如：没有任务的项目）
+- **首次体验：** 引导用户通过清晰的 CTA 创建他们的第一个条目
 
-## Empty States
+## 测试
 
-The components include empty state designs. Make sure to handle:
+详见 `product-plan/sections/[section-id]/tests.md` 中的 UI 行为测试规范，涵盖：
+- 用户流程的成功与失败路径
+- 空状态渲染
+- 组件交互与边界情况
 
-- **No data yet:** Show the empty state UI when the primary list/collection is empty
-- **No related records:** Handle cases where associated records don't exist (e.g., a project with no tasks)
-- **First-time experience:** Guide users to create their first item with clear CTAs
+## 需参考的文件
 
-## Testing
+- `product-plan/sections/[section-id]/README.md` — 功能概览与设计意图
+- `product-plan/sections/[section-id]/tests.md` — UI 行为测试规范
+- `product-plan/sections/[section-id]/components/` — React 组件
+- `product-plan/sections/[section-id]/types.ts` — TypeScript 接口
+- `product-plan/sections/[section-id]/sample-data.json` — 测试数据
+- `product-plan/sections/[section-id]/screenshot.png` — 视觉参考图
 
-See `product-plan/sections/[section-id]/tests.md` for UI behavior test specs covering:
-- User flow success and failure paths
-- Empty state rendering
-- Component interactions and edge cases
+## 完成标准
 
-## Files to Reference
-
-- `product-plan/sections/[section-id]/README.md` — Feature overview and design intent
-- `product-plan/sections/[section-id]/tests.md` — UI behavior test specs
-- `product-plan/sections/[section-id]/components/` — React components
-- `product-plan/sections/[section-id]/types.ts` — TypeScript interfaces
-- `product-plan/sections/[section-id]/sample-data.json` — Test data
-- `product-plan/sections/[section-id]/screenshot.png` — Visual reference
-
-## Done When
-
-- [ ] Components render with real data
-- [ ] Empty states display properly when no records exist
-- [ ] All callback props are wired to working functionality
-- [ ] User can complete all expected flows end-to-end
-- [ ] Matches the visual design (see screenshot)
-- [ ] Responsive on mobile
+- [ ] 组件使用真实数据渲染
+- [ ] 无记录时空状态显示正常
+- [ ] 所有回调 props 已连接到实际功能
+- [ ] 用户可以完整完成所有预期流程
+- [ ] 与视觉设计匹配（见截图）
+- [ ] 移动端适配正常
 ```
 
-## Step 6: Generate one-shot-instructions.md
+## 第 6 步：生成 one-shot-instructions.md
 
-Create `product-plan/instructions/one-shot-instructions.md` by combining all milestone content into a single document. Include the preamble at the very top:
+将所有里程碑内容合并到一个文档中创建 `product-plan/instructions/one-shot-instructions.md`。在最顶部包含前言：
 
 ```markdown
-# [Product Name] — Complete Implementation Instructions
+# [产品名称] — 完整实施指南
 
 ---
 
-## About This Handoff
+## 关于本次交付
 
-**What you're receiving:**
-- Finished UI designs (React components with full styling)
-- Product requirements and user flow specifications
-- Design system tokens (colors, typography)
-- Sample data showing the shape of data components expect
-- Test specs focused on user-facing behavior
-
-**Your job:**
-- Integrate these components into your application
-- Wire up callback props to your routing and business logic
-- Replace sample data with real data from your backend
-- Implement loading, error, and empty states
-
-The components are props-based — they accept data and fire callbacks. How you architect the backend, data layer, and business logic is up to you.
+[包含完整前言]
 
 ---
 
-## Testing
+## 测试
 
-Each section includes a `tests.md` file with UI behavior test specs. These are **framework-agnostic** — adapt them to your testing setup.
+每个模块都包含一个 `tests.md` 文件，规定了 UI 行为测试规范。这些是**框架无关**的 —— 请将其适配到你的测试设置中。
 
-**For each section:**
-1. Read `product-plan/sections/[section-id]/tests.md`
-2. Write tests for key user flows (success and failure paths)
-3. Implement the feature to make tests pass
-4. Refactor while keeping tests green
-
----
-
-[Include product-overview.md content]
+**针对每个模块：**
+1. 阅读 `product-plan/sections/[section-id]/tests.md`
+2. 为关键用户流程编写测试（成功与失败路径）
+3. 实施功能使测试通过
+4. 在保持测试通过的情况下进行重构
 
 ---
 
-# Milestone 1: Shell
-
-[Include 01-shell.md content WITHOUT the preamble — it's already at the top. This includes design tokens AND application shell.]
+[包含来自 product-overview.md 的内容]
 
 ---
 
-# Milestone 2: [First Section Name]
+# 里程碑 1：容器 (Shell)
 
-[Include first section handoff content WITHOUT the preamble]
+[包含 01-shell.md 的内容，不含前言]
 
 ---
 
-# Milestone 3: [Second Section Name]
+# 里程碑 2：[第一个模块名称]
 
-[Include second section handoff content WITHOUT the preamble]
+[包含第一个模块的交付内容，不含前言]
 
-[Repeat for all sections, incrementing milestone numbers]
+[重复所有模块，递增里程碑编号]
 ```
 
-## Step 7: Copy and Transform Components
+## 第 7 步：复制并转换组件
 
-### Shell Components
+### 容器组件 (Shell Components)
 
-Copy from `src/shell/components/` to `product-plan/shell/components/`:
+从 `src/shell/components/` 复制到 `product-plan/shell/components/`：
+- 将导入路径从 `@/...` 转换为相对路径
+- 移除任何 Design OS 特有的导入
+- 确保组件是自包含的
 
-- Transform import paths from `@/...` to relative paths
-- Remove any Design OS-specific imports
-- Ensure components are self-contained
+### 模块组件 (Section Components)
 
-### Section Components
+针对每个模块，从 `src/sections/[section-id]/components/` 复制到 `product-plan/sections/[section-id]/components/`：
+- 转换导入路径：将 `@/../product/sections/[section-id]/types` 转换为 `../types`
+- 移除 Design OS 特有的导入
+- 仅保留可导出的组件（而非预览包装器）
 
-For each section, copy from `src/sections/[section-id]/components/` to `product-plan/sections/[section-id]/components/`:
+### 类型文件 (Types Files)
 
-- Transform import paths:
-  - `@/../product/sections/[section-id]/types` → `../types`
-- Remove Design OS-specific imports
-- Keep only the exportable components (not preview wrappers)
+将 `product/sections/[section-id]/types.ts` 复制到 `product-plan/sections/[section-id]/types.ts`。
 
-### Types Files
+### 示例数据 (Sample Data)
 
-Copy `product/sections/[section-id]/types.ts` to `product-plan/sections/[section-id]/types.ts`
+将 `product/sections/[section-id]/data.json` 复制到 `product-plan/sections/[section-id]/sample-data.json`。
 
-### Sample Data
+## 第 8 步：生成模块 README
 
-Copy `product/sections/[section-id]/data.json` to `product-plan/sections/[section-id]/sample-data.json`
-
-## Step 8: Generate Section READMEs
-
-For each section, create `product-plan/sections/[section-id]/README.md`:
+为每个模块创建 `product-plan/sections/[section-id]/README.md`：
 
 ```markdown
-# [Section Title]
+# [模块标题]
 
-## Overview
+## 概览
+[来自 spec.md 的概览]
 
-[From spec.md overview]
+## 用户流程
+[来自 spec.md 的用户流程]
 
-## User Flows
+## 设计决策
+[界面设计 (Design Screen) 中值得注意的交互或状态]
+[导出组件如何映射到此模块]
+[关于数据如何映射到 props 的特别说明]
 
-[From spec.md user flows]
+## 视觉参考
+查看 `screenshot.png` 以获取目标 UI 设计。
 
-## Design Decisions
+## 提供的组件
+- `[组件名]` — [简要说明]
 
-[Notable design choices from the screen design]
-
-## Data Shapes
-
-**Entities:** [List entities from types.ts]
-
-**From global entities:** [Which entities from data shape are used, if applicable]
-
-## Visual Reference
-
-See `screenshot.png` for the target UI design.
-
-## Components Provided
-
-- `[Component]` — [Brief description]
-- `[SubComponent]` — [Brief description]
-
-## Callback Props
-
-| Callback | Triggered When |
+## 回调 Props
+| 回调 | 触发时机 |
 |----------|---------------|
-| `onView` | User clicks to view details |
-| `onEdit` | User clicks to edit |
-| `onDelete` | User clicks to delete |
-| `onCreate` | User clicks to create new |
-
-[Adjust based on actual Props interface]
+...
 ```
 
-## Step 9: Generate Section Test Instructions
+## 第 9 步：生成模块测试指令
 
-For each section, create `product-plan/sections/[section-id]/tests.md` with UI behavior test specs based on the section's spec, user flows, and UI design.
+为每个模块创建 `product-plan/sections/[section-id]/tests.md`。
 
 ```markdown
-# Test Specs: [Section Title]
+# 测试规范：[模块标题]
 
-These test specs are **framework-agnostic**. Adapt them to your testing setup (Jest, Vitest, Playwright, Cypress, React Testing Library, etc.).
+这些测试规范是**框架无关**的。请将其适配到你的测试设置（Jest, Vitest, Playwright, RTL 等）。
 
-## Overview
-
-[Brief description of what this section does and the key functionality to test]
-
----
-
-## User Flow Tests
-
-### Flow 1: [Primary User Flow Name]
-
-**Scenario:** [Describe what the user is trying to accomplish]
-
-#### Success Path
-
-**Setup:**
-- [Preconditions - what state the app should be in]
-- [Sample data to use - reference types from types.ts]
-
-**Steps:**
-1. User navigates to [page/route]
-2. User sees [specific UI element - be specific about labels, text]
-3. User clicks [specific button/link with exact label]
-4. User enters [specific data in specific field]
-5. User clicks [submit button with exact label]
-
-**Expected Results:**
-- [ ] [Specific UI change - e.g., "Success message appears: 'Item created'"]
-- [ ] [Data change - e.g., "New item appears in the list"]
-- [ ] [State change - e.g., "Form is cleared and reset"]
-- [ ] [Navigation - e.g., "User is redirected to /items/:id"]
-
-#### Failure Path: [Specific Failure Scenario]
-
-**Steps:**
-1. [Same steps as success path, or modified steps]
-
-**Expected Results:**
-- [ ] [Error message - e.g., "Error message appears: 'Unable to save. Please try again.'"]
-- [ ] [UI state - e.g., "Form data is preserved, not cleared"]
-
-#### Failure Path: [Validation Error]
-
-**Steps:**
-1. User leaves [specific field] empty
-2. User clicks [submit button]
-
-**Expected Results:**
-- [ ] [Validation message - e.g., "Field shows error: 'Name is required'"]
-- [ ] [Form state - e.g., "Form is not submitted"]
+## 概览
+[此模块的功能及关键测试点描述]
 
 ---
 
-### Flow 2: [Secondary User Flow Name]
+## 用户流程测试
 
-[Repeat the same structure for additional flows]
+### 流程 1：[主要流程名称]
+**场景：** [用户试图完成的具体任务描述]
 
----
+#### 成功路径
+...
 
-## Empty State Tests
-
-### Primary Empty State
-
-**Scenario:** User has no [primary records] yet (first-time or all deleted)
-
-**Setup:**
-- [Primary data collection] is empty (`[]`)
-
-**Expected Results:**
-- [ ] [Empty state message is visible - e.g., "Shows heading 'No projects yet'"]
-- [ ] [Helpful description - e.g., "Shows text 'Create your first project to get started'"]
-- [ ] [Primary CTA is visible - e.g., "Shows button 'Create Project'"]
-- [ ] [CTA is functional - e.g., "Clicking 'Create Project' opens the create form/modal"]
-
-### Related Records Empty State
-
-**Scenario:** A [parent record] exists but has no [child records] yet
-
-**Setup:**
-- [Parent record] exists with valid data
-- [Child records collection] is empty (`[]`)
-
-**Expected Results:**
-- [ ] [Parent renders correctly with its data]
-- [ ] [Child section shows empty state - e.g., "Shows 'No tasks yet' in the tasks panel"]
-- [ ] [CTA to add child record - e.g., "Shows 'Add Task' button"]
+#### 失败路径：[具体失败场景]
+...
 
 ---
 
-## Component Interaction Tests
+## 空状态测试
+...
 
-### [Component Name]
-
-**Renders correctly:**
-- [ ] [Specific element is visible - e.g., "Displays item title 'Sample Item'"]
-- [ ] [Data display - e.g., "Shows formatted date 'Dec 12, 2025'"]
-
-**User interactions:**
-- [ ] [Click behavior - e.g., "Clicking 'Edit' button calls onEdit with item id"]
-- [ ] [Hover behavior - e.g., "Hovering row shows action buttons"]
-- [ ] [Keyboard - e.g., "Pressing Escape closes the modal"]
-
----
-
-## Edge Cases
-
-- [ ] [Edge case 1 - e.g., "Handles very long item names with text truncation"]
-- [ ] [Edge case 2 - e.g., "Works correctly with 1 item and 100+ items"]
-- [ ] [Edge case 3 - e.g., "Preserves data when navigating away and back"]
-- [ ] [Transition from empty to populated - e.g., "After creating first item, list renders correctly"]
-- [ ] [Transition from populated to empty - e.g., "After deleting last item, empty state appears"]
-
----
-
-## Accessibility Checks
-
-- [ ] [All interactive elements are keyboard accessible]
-- [ ] [Form fields have associated labels]
-- [ ] [Error messages are announced to screen readers]
-- [ ] [Focus is managed appropriately after actions]
-
----
-
-## Sample Test Data
-
-Use the data from `sample-data.json` or create variations:
-
-[Include 2-3 example data objects based on types.ts that tests can use]
-
-```typescript
-// Populated state
-const mockItem = {
-  id: "test-1",
-  name: "Test Item",
-  // ... other fields from types.ts
-};
-
-const mockItems = [mockItem, /* ... more items */];
-
-// Empty states
-const mockEmptyList = [];
-
-const mockItemWithNoChildren = {
-  id: "test-1",
-  name: "Test Item",
-  children: [],
-};
-```
+## 组件交互测试
+...
 ```
 
-### Guidelines for Writing tests.md
-
-When generating tests.md for each section:
-
-1. **Read the spec.md thoroughly** — Extract all user flows and requirements
-2. **Study the screen design components** — Note exact button labels, field names, UI text
-3. **Review types.ts** — Understand the data shapes for assertions
-4. **Include specific UI text** — Tests should verify exact labels, messages, placeholders
-5. **Cover success and failure paths** — Every action should have both tested
-6. **Always test empty states** — Primary lists with no items, parent records with no children
-7. **Be specific about assertions** — "Shows error" is too vague; "Shows red border and message 'Email is required' below the field" is specific
-8. **Include edge cases** — Boundary conditions, transitions between empty and populated states
-9. **Stay framework-agnostic** — Describe WHAT to test (UI behavior), not HOW to write the test code
-
-## Step 10: Generate Design System Files
+## 第 10 步：生成原子设计文件 (Atomic Design Files)
 
 ### tokens.css
-
 ```css
-/* Design Tokens for [Product Name] */
-
+/* [产品名称] 的原子 (Tokens) */
 :root {
-  /* Colors */
-  --color-primary: [Tailwind color];
-  --color-secondary: [Tailwind color];
-  --color-neutral: [Tailwind color];
-
-  /* Typography */
-  --font-heading: '[Heading Font]', sans-serif;
-  --font-body: '[Body Font]', sans-serif;
-  --font-mono: '[Mono Font]', monospace;
+  --color-primary: [Tailwind 颜色];
+  ...
 }
 ```
 
 ### tailwind-colors.md
-
 ```markdown
-# Tailwind Color Configuration
-
-## Color Choices
-
-- **Primary:** `[color]` — Used for buttons, links, key accents
-- **Secondary:** `[color]` — Used for tags, highlights, secondary elements
-- **Neutral:** `[color]` — Used for backgrounds, text, borders
-
-## Usage Examples
-
-Primary button: `bg-[primary]-600 hover:bg-[primary]-700 text-white`
-Secondary badge: `bg-[secondary]-100 text-[secondary]-800`
-Neutral text: `text-[neutral]-600 dark:text-[neutral]-400`
+# Tailwind 颜色配置
+**主色：** `[颜色]` — 用于按钮、链接、核心强调
+...
 ```
 
 ### fonts.md
-
 ```markdown
-# Typography Configuration
-
-## Google Fonts Import
-
-Add to your HTML `<head>` or CSS:
-
-```html
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=[Heading+Font]&family=[Body+Font]&family=[Mono+Font]&display=swap" rel="stylesheet">
+# 排版字体配置
+## Google Fonts 导入
+[HTML 导入代码]
+...
 ```
 
-## Font Usage
-
-- **Headings:** [Heading Font]
-- **Body text:** [Body Font]
-- **Code/technical:** [Mono Font]
-```
-
-## Step 11: Generate Data Shapes Files
+## 第 11 步：生成数据契约文件
 
 ### data-shapes/README.md
-
-Create `product-plan/data-shapes/README.md`:
-
 ```markdown
-# UI Data Shapes
-
-These types define the shape of data that the UI components expect to receive as props. They represent the **frontend contract** — what the components need to render correctly.
-
-How you model, store, and fetch this data on the backend is an implementation decision. You may combine, split, or extend these types to fit your architecture.
-
-## Entities
-
-[List all entities across sections with brief descriptions]
-
-- **[Entity1]** — [Description] (used in: [section-name])
-- **[Entity2]** — [Description] (used in: [section-name])
-- **[Entity3]** — [Description] (used in: [section-name-1], [section-name-2])
-
-## Per-Section Types
-
-Each section includes its own `types.ts` with the full interface definitions:
-
-- `sections/[section-1]/types.ts`
-- `sections/[section-2]/types.ts`
-- ...
-
-## Combined Reference
-
-See `overview.ts` for all entity types aggregated in one file.
+# UI 数据契约
+这些类型定义了 UI 组件期望作为 props 接收的数据形状。它们代表了**前端契约**。
+...
 ```
 
 ### data-shapes/overview.ts
+汇总所有模块的数据接口（不含 Props 接口）。
 
-Create `product-plan/data-shapes/overview.ts` by aggregating all section types:
+## 第 12 步：生成提示词文件 (Prompt Files)
 
-```typescript
-// =============================================================================
-// UI Data Shapes — Combined Reference
-//
-// These types define the data that UI components expect to receive as props.
-// They are a frontend contract, not a database schema. How you model, store,
-// and fetch this data is an implementation decision.
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// From: sections/[section-1]
-// -----------------------------------------------------------------------------
-
-[Copy entity types from section-1/types.ts — data interfaces only, not Props]
-
-// -----------------------------------------------------------------------------
-// From: sections/[section-2]
-// -----------------------------------------------------------------------------
-
-[Copy entity types from section-2/types.ts — data interfaces only, not Props]
-
-// [Repeat for all sections]
-```
-
-Only include the data shape interfaces (e.g., `Invoice`, `LineItem`), not the component Props interfaces. The Props interfaces stay in each section's own `types.ts`.
-
-## Step 12: Generate Prompt Files
-
-Create the `product-plan/prompts/` directory with two ready-to-use prompt files.
+在 `product-plan/prompts/` 目录下创建两个就绪提示词文件。
 
 ### one-shot-prompt.md
 
-Create `product-plan/prompts/one-shot-prompt.md`:
+创建 `product-plan/prompts/one-shot-prompt.md`：
 
 ```markdown
-# One-Shot Implementation Prompt
+# 全量实施提示词 (One-Shot Implementation Prompt)
 
-I need you to implement a complete web application based on detailed UI designs and product specifications I'm providing.
+我需要你根据我提供的详细 UI 设计和产品规范，实现一个完整的 Web 应用程序。
 
-## Instructions
+## 指令
 
-Please carefully read and analyze the following files:
+请仔细阅读并分析以下文件：
 
-1. **@product-plan/product-overview.md** — Product summary with sections and entity overview
-2. **@product-plan/instructions/one-shot-instructions.md** — Complete implementation instructions for all milestones
+1. **@product-plan/product-overview.md** — 包含模块和实体概览的产品摘要
+2. **@product-plan/instructions/one-shot-instructions.md** — 包含所有里程碑的完整实施指南
 
-After reading these, also review:
-- **@product-plan/design-system/** — Color and typography tokens
-- **@product-plan/data-shapes/** — UI data contracts (the shapes of data the components expect)
-- **@product-plan/shell/** — Application shell components
-- **@product-plan/sections/** — All section components, types, sample data, and test specs
+阅读完这些后，还要审查：
+- **@product-plan/design-system/** — 颜色和排版原子 (Tokens)
+- **@product-plan/data-shapes/** — UI 数据契约（组件期望的数据格式）
+- **@product-plan/shell/** — 容器组件
+- **@product-plan/sections/** — 所有模块的组件、类型、示例数据和测试规范
 
-## Before You Begin
+## 在你开始之前
 
-Review all the provided files, then ask me clarifying questions about:
+在审查完所有提供的文件后，请向我询问以下方面的澄清问题：
 
-1. **My tech stack** — What framework, language, and tools I'm using, and any existing codebase conventions
-2. **Authentication & users** — How users should sign up, log in, and what permissions exist
-3. **Product requirements** — Anything in the specs or user flows that needs clarification
-4. **Anything else** — Whatever you need to know before implementing
+1. **我的技术栈** — 我正在使用的框架、语言和工具，以及任何现有的代码库约定
+2. **身份验证与用户** — 用户应如何注册、登录，以及存在哪些权限
+3. **产品要求** — 规范或用户流程中任何需要澄清的内容
+4. **其他事项** — 你在实施前需要了解的任何信息
 
-Lastly, ask me if I have any additional notes for this implementation.
+最后，询问我对于本次实施是否有任何额外的备注。
 
-Once I answer your questions, create a comprehensive implementation plan before coding.
-
+一旦我回答了你的问题，请在编码前创建一个全面的实施计划。
 ```
 
 ### section-prompt.md
 
-Create `product-plan/prompts/section-prompt.md`:
+创建 `product-plan/prompts/section-prompt.md`：
 
 ```markdown
-# Section Implementation Prompt
+# 模块实施提示词 (Section Implementation Prompt)
 
-## Define Section Variables
+## 定义模块变量
 
-- **SECTION_NAME** = [Human-readable name, e.g., "Invoices" or "Project Dashboard"]
-- **SECTION_ID** = [Folder name in sections/, e.g., "invoices" or "project-dashboard"]
-- **NN** = [Milestone number, e.g., "02" or "03" — sections start at 02 since 01 is Shell]
+- **SECTION_NAME** = [易读名称，例如：“发票” 或 “项目仪表板”]
+- **SECTION_ID** = [sections/ 中的文件夹名，例如：“invoices” 或 “project-dashboard”]
+- **NN** = [里程碑编号，例如：“02” 或 “03” — 模块从 02 开始，因为 01 是 Shell]
 
 ---
 
-I need you to implement the **SECTION_NAME** section of my application.
+我需要你实现我应用程序中的 **SECTION_NAME** 模块。
 
-## Instructions
+## 指令
 
-Please carefully read and analyze the following files:
+请仔细阅读并分析以下文件：
 
-1. **@product-plan/product-overview.md** — Product summary for overall context
-2. **@product-plan/instructions/incremental/NN-SECTION_ID.md** — Specific instructions for this section
+1. **@product-plan/product-overview.md** — 提供整体背景的产品摘要
+2. **@product-plan/instructions/incremental/NN-SECTION_ID.md** — 本模块的具体指南
 
-Also review the section assets:
-- **@product-plan/sections/SECTION_ID/README.md** — Feature overview and design intent
-- **@product-plan/sections/SECTION_ID/tests.md** — UI behavior test specs
-- **@product-plan/sections/SECTION_ID/components/** — React components to integrate
-- **@product-plan/sections/SECTION_ID/types.ts** — TypeScript interfaces
-- **@product-plan/sections/SECTION_ID/sample-data.json** — Test data
+同时审查模块资源：
+- **@product-plan/sections/SECTION_ID/README.md** — 功能概览与设计意图
+- **@product-plan/sections/SECTION_ID/tests.md** — UI 行为测试规范
+- **@product-plan/sections/SECTION_ID/components/** — 要集成的 React 组件
+- **@product-plan/sections/SECTION_ID/types.ts** — TypeScript 接口
+- **@product-plan/sections/SECTION_ID/sample-data.json** — 测试数据
 
-## Before You Begin
+## 在你开始之前
 
-Review all the provided files, then ask me clarifying questions about:
+在审查完所有提供的文件后，请向我询问以下方面的澄清问题：
 
-1. **Integration** — How this section connects to existing features and any APIs already built
-2. **Product requirements** — Anything in the specs or user flows that needs clarification
-3. **Anything else** — Whatever you need to know before implementing
+1. **集成** — 本模块如何与现有功能以及已构建的 API 连接
+2. **产品要求** — 规范或用户流程中任何需要澄清的内容
+3. **其他事项** — 你在实施前需要了解的任何信息
 
-Lastly, ask me if I have any additional notes for this implementation.
+最后，询问我对于本次实施是否有任何额外的备注。
 
-Once I answer your questions, proceed with implementation.
-
+一旦我回答了你的问题，请开始实施。
 ```
 
-## Step 13: Generate README.md
+## 第 13 步：生成 README.md
 
-Create `product-plan/README.md`:
+创建 `product-plan/README.md`，这是一份交付总览和快速入门指南，详细说明如何使用生成的提示词和资源进行后续开发。
 
-```markdown
-# [Product Name] — Design Handoff
+## 第 14 步：复制截图
+复制 `product/shell/` 和 `product/sections/[section-id]/` 下的 `.png` 文件至对应导出目录。
 
-This folder contains everything needed to implement [Product Name].
+## 第 15 步：创建 Zip 文件
+使用 Bash 命令将 `product-plan/` 文件夹打包为 `product-plan.zip`。
 
-## What's Included
+## 第 16 步：确认完成
 
-**Ready-to-Use Prompts:**
-- `prompts/one-shot-prompt.md` — Prompt template for full implementation
-- `prompts/section-prompt.md` — Prompt template for section-by-section implementation
-
-**Instructions:**
-- `product-overview.md` — Product summary (provide with every implementation)
-- `instructions/one-shot-instructions.md` — All milestones combined for full implementation
-- `instructions/incremental/` — Milestone-by-milestone instructions (shell, then sections)
-
-**Design Assets:**
-- `design-system/` — Colors, fonts, design tokens
-- `data-shapes/` — UI data contracts (the shapes of data components expect)
-- `shell/` — Application shell components
-- `sections/` — All section components, types, sample data, and test specs
-
-## How to Use This
-
-### Option A: Incremental (Recommended)
-
-Build your app milestone by milestone for better control:
-
-1. Copy the `product-plan/` folder to your codebase
-2. Start with Shell (`instructions/incremental/01-shell.md`) — includes design tokens and application shell
-3. For each section:
-   - Open `prompts/section-prompt.md`
-   - Fill in the section variables at the top (SECTION_NAME, SECTION_ID, NN)
-   - Copy/paste into your coding agent
-   - Answer questions and implement
-4. Review and test after each milestone
-
-### Option B: One-Shot
-
-Build the entire app in one session:
-
-1. Copy the `product-plan/` folder to your codebase
-2. Open `prompts/one-shot-prompt.md`
-3. Add any additional notes to the prompt
-4. Copy/paste the prompt into your coding agent
-5. Answer the agent's clarifying questions
-6. Let the agent plan and implement everything
-
-## Testing
-
-Each section includes a `tests.md` file with UI behavior test specs. For best results:
-
-1. Read `sections/[section-id]/tests.md` before implementing
-2. Write tests for key user flows
-3. Implement the feature to make tests pass
-4. Refactor while keeping tests green
-
-The test specs are **framework-agnostic** — they describe WHAT to test (user-facing behavior), not HOW. Adapt to your testing setup.
-
-## Tips
-
-- **Use the pre-written prompts** — They prompt for important clarifying questions about your tech stack and requirements.
-- **Add your own notes** — Customize prompts with project-specific context when needed.
-- **Build on your designs** — Use completed sections as the starting point for future feature development.
-- **Review thoroughly** — Check plans and implementations carefully to catch details and inconsistencies.
-- **The components are flexible** — They accept data and fire callbacks. How you architect the backend is up to you.
-
----
-
-*Generated by Design OS*
-```
-
-## Step 14: Copy Screenshots
-
-Copy any `.png` files from:
-- `product/shell/` → `product-plan/shell/`
-- `product/sections/[section-id]/` → `product-plan/sections/[section-id]/`
-
-## Step 15: Create Zip File
-
-After generating all the export files, create a zip archive of the product-plan folder:
-
-```bash
-# Remove any existing zip file
-rm -f product-plan.zip
-
-# Create the zip file
-cd . && zip -r product-plan.zip product-plan/
-```
-
-This creates `product-plan.zip` in the project root, which will be available for download on the Export page.
-
-## Step 16: Confirm Completion
-
-Let the user know:
-
-"I've created the complete export package at `product-plan/` and `product-plan.zip`.
-
-**What's Included:**
-
-**Ready-to-Use Prompts:**
-- `prompts/one-shot-prompt.md` — Prompt for full implementation
-- `prompts/section-prompt.md` — Prompt template for section-by-section
-
-**Instructions:**
-- `product-overview.md` — Product summary (always provide with instructions)
-- `instructions/one-shot-instructions.md` — All milestones combined
-- `instructions/incremental/` — [N] milestone instructions (shell, then sections)
-
-**Design Assets:**
-- `design-system/` — Colors, fonts, tokens
-- `data-shapes/` — UI data contracts and combined type reference
-- `shell/` — Application shell components
-- `sections/` — [N] section component packages with test specs
-
-**Download:**
-
-Restart your dev server and visit the Export page to download `product-plan.zip`.
-
-**How to Use:**
-
-1. Copy `product-plan/` to your implementation codebase
-2. Open `prompts/one-shot-prompt.md` or `prompts/section-prompt.md`
-3. Add any additional notes, then copy/paste into your coding agent
-4. Answer the agent's clarifying questions about your tech stack, auth, etc.
-5. Let the agent implement based on the instructions
-
-The components are props-based and portable — they accept data and callbacks, letting your implementation agent handle routing, data fetching, and state management however fits your stack."
-
-## Important Notes
-
-- Always transform import paths when copying components
-- Include `product-overview.md` context with every implementation session
-- Use the pre-written prompts — they prompt for important clarifying questions
-- Screenshots provide visual reference for fidelity checking
-- Sample data files are for testing before real APIs are built
-- The export is self-contained — no dependencies on Design OS
-- Components are portable — they work with any React setup
+告知用户导出已完成，并提供详细的后续使用说明（简体中文）。
+（由于 export-product.md 主要是指令逻辑，我在此处将输出总结也进行了本地化处理。）

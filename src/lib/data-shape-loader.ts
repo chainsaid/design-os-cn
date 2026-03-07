@@ -37,8 +37,8 @@ export function parseDataShape(md: string): DataShape | null {
     const entities: Entity[] = []
     const relationships: string[] = []
 
-    // Extract entities section
-    const entitiesSection = md.match(/## Entities\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
+    // Extract entities section - supports both English and Chinese
+    const entitiesSection = md.match(/## (?:Entities|实体)\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
 
     if (entitiesSection?.[1]) {
       // Match ### EntityName followed by description
@@ -51,8 +51,8 @@ export function parseDataShape(md: string): DataShape | null {
       }
     }
 
-    // Extract relationships section
-    const relationshipsSection = md.match(/## Relationships\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
+    // Extract relationships section - supports both English and Chinese
+    const relationshipsSection = md.match(/## (?:Relationships|关系)\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
 
     if (relationshipsSection?.[1]) {
       const lines = relationshipsSection[1].split('\n')

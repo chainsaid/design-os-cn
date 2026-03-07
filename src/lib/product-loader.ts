@@ -62,16 +62,16 @@ export function parseProductOverview(md: string): ProductOverview | null {
     const nameMatch = normalizedMd.match(/^#\s+(.+)$/m)
     const name = nameMatch?.[1]?.trim() || 'Product Overview'
 
-    // Extract description - content between ## Description and next ##
-    const descMatch = normalizedMd.match(/## Description\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
+    // Extract description - content between ## Description/描述 and next ##
+    const descMatch = normalizedMd.match(/## (?:Description|描述)\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
     const description = descMatch?.[1]?.trim() || ''
 
-    // Extract problems - ### Problem N: Title pattern
-    const problemsSection = normalizedMd.match(/## Problems & Solutions\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
+    // Extract problems - ### Problem N: Title pattern (supports both English and Chinese)
+    const problemsSection = normalizedMd.match(/## (?:Problems & Solutions|问题与解决方案)\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
     const problems: Problem[] = []
 
     if (problemsSection?.[1]) {
-      const problemMatches = [...problemsSection[1].matchAll(/### Problem \d+:\s*(.+)\n+([\s\S]*?)(?=\n### |\n## |$)/g)]
+      const problemMatches = [...problemsSection[1].matchAll(/### (?:Problem \d+|问题 \d+):\s*(.+)\n+([\s\S]*?)(?=\n### |\n## |$)/g)]
       for (const match of problemMatches) {
         problems.push({
           title: match[1].trim(),
@@ -80,8 +80,8 @@ export function parseProductOverview(md: string): ProductOverview | null {
       }
     }
 
-    // Extract features - bullet list after ## Key Features
-    const featuresSection = normalizedMd.match(/## Key Features\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
+    // Extract features - bullet list after ## Key Features/核心功能
+    const featuresSection = normalizedMd.match(/## (?:Key Features|核心功能)\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
     const features: string[] = []
 
     if (featuresSection?.[1]) {
@@ -111,12 +111,14 @@ export function parseProductOverview(md: string): ProductOverview | null {
  * Expected format:
  * # Product Roadmap
  *
- * ## Sections
+ * ## 功能模块
  *
  * ### 1. [Section Title]
+ * [section-id: slugified-id]
  * [One sentence description]
  *
  * ### 2. [Section Title]
+ * [section-id: slugified-id]
  * [One sentence description]
  */
 export function parseProductRoadmap(md: string): ProductRoadmap | null {
@@ -128,16 +130,17 @@ export function parseProductRoadmap(md: string): ProductRoadmap | null {
     // Normalize line endings (Windows CRLF → LF)
     const normalizedMd = md.replace(/\r\n/g, '\n')
 
-    // Match sections with pattern ### N. Title
-    const sectionMatches = [...normalizedMd.matchAll(/### (\d+)\.\s*(.+)\n+([\s\S]*?)(?=\n### |\n## |\n#[^#]|$)/g)]
+    // Match sections with pattern ### N. Title followed by [section-id: id] on next line
+    const sectionMatches = [...normalizedMd.matchAll(/### (\d+)\.\s*([^\n]+)\n+\[section-id:\s*([^\]]+)\]\n+([\s\S]*?)(?=\n### |\n## |\n#[^#]|$)/g)]
 
     for (const match of sectionMatches) {
       const order = parseInt(match[1], 10)
       const title = match[2].trim()
-      const description = match[3].trim()
+      const explicitId = match[3].trim()
+      const description = match[4].trim()
 
       sections.push({
-        id: slugify(title),
+        id: explicitId,
         title,
         description,
         order,

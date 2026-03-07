@@ -80,10 +80,10 @@ export function DesignPage() {
         {/* Page intro */}
         <div className="mb-8">
           <h1 className="text-2xl font-semibold text-stone-900 dark:text-stone-100 mb-2">
-            Design System
+            设计系统
           </h1>
           <p className="text-stone-600 dark:text-stone-400">
-            Define the visual foundation and application shell for your product.
+            定义产品的视觉基础和应用容器。
           </p>
         </div>
 
@@ -95,7 +95,7 @@ export function DesignPage() {
             <Card className="border-stone-200 dark:border-stone-700 shadow-sm">
               <CardHeader className="pb-4">
                 <CardTitle className="text-lg font-semibold text-stone-900 dark:text-stone-100">
-                  Design Tokens
+                  原子设计
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -103,19 +103,19 @@ export function DesignPage() {
                 {designSystem?.colors && (
                   <div>
                     <h4 className="text-sm font-medium text-stone-500 dark:text-stone-400 uppercase tracking-wide mb-4">
-                      Colors
+                      颜色
                     </h4>
                     <div className="grid grid-cols-3 gap-6">
                       <ColorSwatch
-                        label="Primary"
+                        label="主色"
                         colorName={designSystem.colors.primary}
                       />
                       <ColorSwatch
-                        label="Secondary"
+                        label="辅助色"
                         colorName={designSystem.colors.secondary}
                       />
                       <ColorSwatch
-                        label="Neutral"
+                        label="中性色"
                         colorName={designSystem.colors.neutral}
                       />
                     </div>
@@ -126,23 +126,23 @@ export function DesignPage() {
                 {designSystem?.typography && (
                   <div>
                     <h4 className="text-sm font-medium text-stone-500 dark:text-stone-400 uppercase tracking-wide mb-4">
-                      Typography
+                      字体
                     </h4>
                     <div className="grid grid-cols-3 gap-6">
                       <div>
-                        <p className="text-xs text-stone-500 dark:text-stone-400 mb-1">Heading</p>
+                        <p className="text-xs text-stone-500 dark:text-stone-400 mb-1">标题</p>
                         <p className="font-semibold text-stone-900 dark:text-stone-100">
                           {designSystem.typography.heading}
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs text-stone-500 dark:text-stone-400 mb-1">Body</p>
+                        <p className="text-xs text-stone-500 dark:text-stone-400 mb-1">正文</p>
                         <p className="text-stone-900 dark:text-stone-100">
                           {designSystem.typography.body}
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs text-stone-500 dark:text-stone-400 mb-1">Mono</p>
+                        <p className="text-xs text-stone-500 dark:text-stone-400 mb-1">等宽</p>
                         <p className="font-mono text-stone-900 dark:text-stone-100">
                           {designSystem.typography.mono}
                         </p>
@@ -170,7 +170,7 @@ export function DesignPage() {
             <Card className="border-stone-200 dark:border-stone-700 shadow-sm">
               <CardHeader className="pb-4">
                 <CardTitle className="text-lg font-semibold text-stone-900 dark:text-stone-100">
-                  Application Shell
+                  应用容器
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -185,7 +185,7 @@ export function DesignPage() {
                 {shell.spec.navigationItems.length > 0 && (
                   <div>
                     <h4 className="text-sm font-medium text-stone-500 dark:text-stone-400 uppercase tracking-wide mb-2">
-                      Navigation
+                      导航
                     </h4>
                     <ul className="space-y-1">
                       {shell.spec.navigationItems.map((item, index) => {
@@ -220,7 +220,7 @@ export function DesignPage() {
                           <Layout className="w-4 h-4 text-stone-600 dark:text-stone-300" strokeWidth={1.5} />
                         </div>
                         <span className="font-medium text-stone-700 dark:text-stone-300 group-hover:text-stone-900 dark:group-hover:text-stone-100">
-                          View Shell Design
+                          查看容器设计
                         </span>
                       </div>
                       <ChevronRight className="w-4 h-4 text-stone-400 dark:text-stone-500" strokeWidth={1.5} />

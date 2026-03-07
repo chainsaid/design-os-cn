@@ -99,12 +99,12 @@ export function parseSpec(md: string): ParsedSpec | null {
     const titleMatch = md.match(/^#\s+(.+)$/m)
     const title = titleMatch?.[1]?.trim() || 'Section Specification'
 
-    // Extract overview - content between ## Overview and next ##
-    const overviewMatch = md.match(/## Overview\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
+    // Extract overview - content between ## Overview/概览 and next ##
+    const overviewMatch = md.match(/## (?:Overview|概览)\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
     const overview = overviewMatch?.[1]?.trim() || ''
 
-    // Extract user flows - bullet list after ## User Flows
-    const userFlowsSection = md.match(/## User Flows\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
+    // Extract user flows - bullet list after ## User Flows/用户流程 (supports both English and Chinese)
+    const userFlowsSection = md.match(/## (?:User Flows|用户流程)\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
     const userFlows: string[] = []
 
     if (userFlowsSection?.[1]) {
@@ -117,8 +117,8 @@ export function parseSpec(md: string): ParsedSpec | null {
       }
     }
 
-    // Extract UI requirements - bullet list after ## UI Requirements
-    const uiReqSection = md.match(/## UI Requirements\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
+    // Extract UI requirements - bullet list after ## UI Requirements/UI 要求 (supports both English and Chinese)
+    const uiReqSection = md.match(/## (?:UI Requirements|UI 要求)\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
     const uiRequirements: string[] = []
 
     if (uiReqSection?.[1]) {

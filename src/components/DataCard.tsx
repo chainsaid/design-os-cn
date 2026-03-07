@@ -54,11 +54,11 @@ export function DataCard({ data }: DataCardProps) {
       <CardHeader className="pb-4">
         <div className="flex items-center gap-3">
           <CardTitle className="text-lg font-semibold text-stone-900 dark:text-stone-100">
-            Sample Data
+            示例数据
           </CardTitle>
           {recordCount > 0 && (
             <span className="text-xs font-medium text-stone-500 dark:text-stone-400 bg-stone-100 dark:bg-stone-800 px-2 py-0.5 rounded">
-              {recordCount} {recordCount === 1 ? 'record' : 'records'}
+              {recordCount} 条记录
             </span>
           )}
         </div>
@@ -70,7 +70,7 @@ export function DataCard({ data }: DataCardProps) {
             {/* Models - Card Grid */}
             <div>
               <h4 className="text-sm font-medium text-stone-500 dark:text-stone-400 uppercase tracking-wide mb-3">
-                Data Shapes
+                数据模型
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {Object.entries(meta.models).map(([modelName, description]) => (
@@ -93,7 +93,7 @@ export function DataCard({ data }: DataCardProps) {
             {meta.relationships.length > 0 && (
               <div>
                 <h4 className="text-sm font-medium text-stone-500 dark:text-stone-400 uppercase tracking-wide mb-3">
-                  How They Connect
+                  关系
                 </h4>
                 <ul className="space-y-2">
                   {meta.relationships.map((relationship, index) => (
@@ -121,7 +121,7 @@ export function DataCard({ data }: DataCardProps) {
               strokeWidth={1.5}
             />
             <span className="text-xs text-stone-500 dark:text-stone-400 group-hover:text-stone-700 dark:group-hover:text-stone-300 transition-colors">
-              {isJsonOpen ? 'Hide' : 'View'} JSON
+              {isJsonOpen ? '隐藏' : '查看'} JSON
             </span>
           </CollapsibleTrigger>
           <CollapsibleContent>

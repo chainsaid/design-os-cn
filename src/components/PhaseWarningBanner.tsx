@@ -46,10 +46,10 @@ export function PhaseWarningBanner() {
   // Build the warning message
   const missingPhases: { name: string; path: string }[] = []
   if (!hasDataShape) {
-    missingPhases.push({ name: 'Data Shape', path: '/data-shape' })
+    missingPhases.push({ name: '数据模型', path: '/data-shape' })
   }
   if (!hasDesign) {
-    missingPhases.push({ name: 'Design', path: '/design' })
+    missingPhases.push({ name: '设计', path: '/design' })
   }
 
   return (
@@ -58,10 +58,10 @@ export function PhaseWarningBanner() {
         <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0" strokeWidth={2} />
         <div className="flex-1 min-w-0">
           <p className="text-sm text-amber-800 dark:text-amber-200">
-            Consider completing{' '}
+            需要先完成
             {missingPhases.map((phase, index) => (
               <span key={phase.path}>
-                {index > 0 && ' and '}
+                {index > 0 && ' 和 '}
                 <Link
                   to={phase.path}
                   className="font-medium underline hover:no-underline"
@@ -69,8 +69,7 @@ export function PhaseWarningBanner() {
                   {phase.name}
                 </Link>
               </span>
-            ))}{' '}
-            before designing sections.
+            ))}
           </p>
         </div>
         <button

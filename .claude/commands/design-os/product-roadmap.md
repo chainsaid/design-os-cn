@@ -1,97 +1,97 @@
-# Product Roadmap
+# 产品路线图 (Product Roadmap)
 
-You are helping the user create or update their product roadmap for Design OS.
+你正在协助用户在 Design OS 中创建或更新其产品路线图。
 
-## Step 1: Check Current State
+## 第 1 步：检查当前状态
 
-First, check if `/product/product-roadmap.md` exists.
+首先，检查 `/product/product-roadmap.md` 是否存在。
 
 ---
 
-## If Roadmap Already Exists (Updating)
+## 如果路线图已存在 (更新操作)
 
-Read both:
+阅读以下两个文件：
 - `/product/product-overview.md`
 - `/product/product-roadmap.md`
 
-Present the current state and ask what to change:
+展示当前状态并询问需要更改的内容：
 
-"Your product roadmap currently has [N] sections:
+“你的产品路线图目前有 [N] 个模块：
 
-1. **[Section 1]** — [Description]
-2. **[Section 2]** — [Description]
-3. **[Section 3]** — [Description]
+1. **[模块 1]** — [描述]
+2. **[模块 2]** — [描述]
+3. **[模块 3]** — [描述]
 
-What would you like to change about the sections?"
+你想对这些模块进行哪些修改？”
 
-Wait for the user's response describing what they want changed. Once you receive their notes, **immediately proceed** to update `product/product-roadmap.md` based on their requested changes — do not present a draft for approval.
+等待用户描述他们想要更改的内容。一旦收到他们的笔记，**立即继续**根据其要求的更改更新 `product/product-roadmap.md` —— 不要展示草案等待批准。
 
-After updating, inform the user:
+更新后，告知用户：
 
-"I've updated the product roadmap based on your feedback. Review the changes and let me know if you'd like further adjustments."
+“我已经根据你的反馈更新了产品路线图。请查看更改，如果需要进一步调整请告诉我。”
 
-Stop here — the remaining steps below are for generating a new roadmap from scratch.
+此处停止 —— 以下步骤仅适用于从头生成新路线图。
 
 ---
 
-## If No Roadmap Exists (Creating New)
+## 如果路线图不存在 (创建新路线图)
 
-### Check Prerequisites
+### 检查先决条件
 
-Read `/product/product-overview.md`. If it doesn't exist:
+阅读 `/product/product-overview.md`。如果它不存在：
 
-"Before creating a product roadmap, you'll need to define your product vision. Please run `/product-vision` first."
+“在创建产品路线图之前，你需要先定义产品愿景。请先运行 `/product-vision`。”
 
-Stop here if the product overview is missing.
+如果缺少产品概览，请停止操作。
 
-### Analyze and Generate
+### 分析并生成
 
-Read the product overview and analyze:
-- The core description
-- The problems being solved
-- The key features listed
+阅读产品概览并分析：
+- 核心描述
+- 正在解决的问题
+- 列出的关键功能
 
-**Immediately proceed** to create `/product/product-roadmap.md` — do not present a draft for approval. Generate 3-5 sections that represent:
-- **Navigation items** - main areas of the product UI
-- **Roadmap phases** - logical order for building
-- **Self-contained feature areas** - each can be designed and built independently
+**立即继续**创建 `/product/product-roadmap.md` —— 不要展示草案等待批准。生成 3-5 个模块，这些模块代表：
+- **导航项** - 产品 UI 的主要区域
+- **计划阶段** - 构建的逻辑顺序
+- **功能独立的区域** - 每个区域都可以独立设计和构建
 
-Use this exact format:
+使用以下确切格式：
 
 ```markdown
-# Product Roadmap
+# 产品路线图
 
-## Sections
+## 功能模块
 
-### 1. [Section Title]
-[One sentence description]
+### 1. [模块标题]
+[一句描述]
 
-### 2. [Section Title]
-[One sentence description]
+### 2. [模块标题]
+[一句描述]
 
-### 3. [Section Title]
-[One sentence description]
+### 3. [模块标题]
+[一句描述]
 ```
 
-### Confirm
+### 确认
 
-"I've created your product roadmap at `/product/product-roadmap.md` with [N] sections:
+“我已经为你创建了产品路线图，位于 `/product/product-roadmap.md`，包含 [N] 个模块：
 
-1. **[Section 1]** — [Description]
-2. **[Section 2]** — [Description]
-3. **[Section 3]** — [Description]
+1. **[模块 1]** — [描述]
+2. **[模块 2]** — [描述]
+3. **[模块 3]** — [描述]
 
-Review the sections and let me know if you'd like to adjust anything. When you're ready, run `/data-shape` to sketch out the general shape of your product's data."
+请查看这些模块，如果需要调整请告诉我。准备就绪后，可以运行 `/data-shape` 来勾勒产品的数据模型 (Data Shape)。”
 
 ---
 
-## Important Notes
+## 重要注意事项
 
-- Sections should be ordered by development priority
-- Each section should be self-contained enough to design and build independently
-- Section titles become navigation items in the app
-- The numbered format (`### 1. Title`) is required for parsing
-- Keep descriptions to one sentence - concise and clear
-- Don't create too many sections (3-5 is ideal)
-- Do NOT present a draft for approval — generate the file immediately and let the user review after
-- If the user requests changes after reviewing, update the file immediately
+- 模块应按开发优先级排序
+- 每个模块都应足够独立，以便可以独立设计和构建
+- 模块标题将成为应用程序中的导航项
+- 解析器要求必须使用编号格式（`### 1. 标题`）
+- 将描述保持为一句话 —— 简洁清晰
+- 不要创建过多的模块（3-5 个最为理想）
+- 不要展示草案等待批准 —— 立即生成文件并让用户随后审核
+- 如果用户在审核后要求更改，请立即更新文件

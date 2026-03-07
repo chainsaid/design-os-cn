@@ -58,14 +58,14 @@ export function SectionsPage() {
         {/* Page intro */}
         <div className="mb-8">
           <h1 className="text-2xl font-semibold text-stone-900 dark:text-stone-100 mb-2">
-            Sections
+            模块
           </h1>
           <p className="text-stone-600 dark:text-stone-400">
-            Design each section of your product with specifications, sample data, and screen designs.
+            为每个模块设计规范、示例数据和界面设计。
           </p>
           {sections.length > 0 && (
             <p className="text-sm text-stone-500 dark:text-stone-400 mt-2">
-              {completedSections} of {sections.length} sections completed
+              已完成 {completedSections}/{sections.length} 个模块
             </p>
           )}
         </div>
@@ -80,7 +80,7 @@ export function SectionsPage() {
           <Card className="border-stone-200 dark:border-stone-700 shadow-sm">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg font-semibold text-stone-900 dark:text-stone-100">
-                All Sections
+                所有模块
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
@@ -121,14 +121,14 @@ export function SectionsPage() {
 
                             {/* Progress indicators */}
                             <div className="flex items-center gap-3 mt-2">
-                              <ProgressDot label="Spec" done={progress?.hasSpec} />
-                              <ProgressDot label="Data" done={progress?.hasData} />
+                              <ProgressDot label="规范" done={progress?.hasSpec} />
+                              <ProgressDot label="数据" done={progress?.hasData} />
                               <ProgressDot
-                                label={progress?.screenDesignCount ? `${progress.screenDesignCount} screen design${progress.screenDesignCount !== 1 ? 's' : ''}` : 'Screen Designs'}
+                                label={progress?.screenDesignCount ? `${progress.screenDesignCount} 个界面设计` : '界面设计'}
                                 done={progress?.hasScreenDesigns}
                               />
                               <ProgressDot
-                                label={progress?.screenshotCount ? `${progress.screenshotCount} screenshot${progress.screenshotCount !== 1 ? 's' : ''}` : 'Screenshots'}
+                                label={progress?.screenshotCount ? `${progress.screenshotCount} 张截图` : '截图'}
                                 done={progress?.hasScreenshots}
                                 optional
                               />

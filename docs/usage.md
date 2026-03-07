@@ -1,59 +1,63 @@
-# Usage
+# 使用指南 (Usage)
 
-Design OS uses slash commands to guide you through the design process. Each command is a conversation—the AI asks questions, you provide direction, and together you shape your product.
+Design OS 使用斜杠命令（slash commands）来引导你完成设计流程。每个命令都是一场对话——AI 提出问题，你提供指导，共同打造你的产品。
 
-## The Design Workflow
+## 设计工作流
 
-Design OS follows a structured sequence. Each step builds on the previous one.
+Design OS 遵循结构化的顺序。每一步都建立在之前的各个步骤之上。
 
-### Phase 1: Product Planning
+### 阶段 1：产品规划 (Product Planning)
 
-Before designing any screens, establish the foundation:
+在进行任何界面设计 (Design Screen) 之前，先奠定基础：
 
-1. **Product Vision** — Define your product, sections, and data shape in one conversational flow
-2. **Design Tokens** — Choose colors and typography
-3. **Application Shell** — Design navigation and layout
+1. **产品愿景 (Product Vision)** — 在一次对话流程中定义你的产品定义、模块和数据模型 (Data Shape)。
+2. **原子设计 (Design Tokens)** — 选择颜色和排版字体。
+3. **容器设计 (Shell Design)** — 设计导航和整体布局。
 
-See [Product Planning](product-planning.md) for details on each command.
+详情请参阅 [产品规划](product-planning.md) 了解每个命令的细节。
 
-### Phase 2: Section Design
+### 阶段 2：功能模块设计 (Section Design)
 
-Once the foundation is set, work through each section:
+基础奠定后，依次处理每个模块：
 
-1. **Shape the Section** — Define scope, requirements, and generate sample data + types
-2. **Design the Screen** — Build the actual React components
-3. **Capture Screenshots** — Document the design (optional)
+1. **模块定义 (Shape the Section)** — 定义范围、要求，并生成示例数据和类型。
+2. **界面设计 (Design Screen)** — 构建实际的 React 组件。
+3. **捕捉截图** — 为设计存档（可选）。
 
-Repeat for each section in your roadmap.
+对路线图中的每个模块重复此流程。
 
-See [Designing Sections](design-section.md) for details on each command.
+详情请参阅 [功能模块设计 (Section Design)](design-section.md) 了解每个命令的细节。
 
-### Phase 3: Export
+### 阶段 3：导出 (Export)
 
-When all sections are designed:
+当所有模块设计完成后：
 
-1. **Export** — Generate the complete handoff package
+1. **导出 (Export)** — 生成完整的交付包。
 
-See [Export](export.md) for details on what's included and how to use it.
+详情请参阅 [导出](export.md) 了解包含的内容及其使用方法。
 
-## Quick Reference
+---
 
-| Command | Purpose |
+## 快速参考
+
+| 命令 | 用途 |
 |---------|---------|
-| `/product-vision` | Define product overview, roadmap sections, and data shape |
-| `/design-tokens` | Choose colors and typography |
-| `/design-shell` | Design navigation and layout |
-| `/shape-section` | Define a section's scope, requirements, and generate sample data + types |
-| `/design-screen` | Create screen design components |
-| `/screenshot-design` | Capture screenshots |
-| `/export-product` | Generate the complete handoff package |
-| `/product-roadmap` | Update product sections (after initial creation) |
-| `/data-shape` | Update data entities (after initial creation) |
-| `/sample-data` | Update sample data and types (after initial creation) |
+| `/product-vision` | 定义产品概览、路线图模块和数据模型 (Data Shape) |
+| `/design-tokens` | 进行原子设计 (Design Tokens) |
+| `/design-shell` | 进行容器设计 (Shell Design) |
+| `/shape-section` | 定义模块范围、要求，并生成示例数据和类型 (Section Design) |
+| `/design-screen` | 创建界面设计 (Design Screen) 组件 |
+| `/screenshot-design` | 捕捉截图 |
+| `/export-product` | 生成完整的交付包 |
+| `/product-roadmap` | 更新产品模块（初始创建后专用） |
+| `/data-shape` | 更新数据模型 (Data Shape)（初始创建后专用） |
+| `/sample-data` | 更新示例数据和类型（初始创建后专用） |
 
-## Tips
+---
 
-- **Follow the sequence** — Each step builds on the previous. Don't skip ahead.
-- **Be specific** — The more detail you provide, the better the output.
-- **Iterate** — Each command is a conversation. Refine until you're happy.
-- **Restart the dev server** — After creating new components, restart to see changes.
+## 使用技巧
+
+- **遵循顺序** — 每一步都建立在之前的基础上。请勿随意跳步。
+- **提供细节** — 你提供的细节越多，输出的质量就越高。
+- **不断迭代** — 每个命令都是一场对话。不断完善，直到你满意为止。
+- **重启开发服务器** — 创建新组件后，请重启服务器以查看更改。

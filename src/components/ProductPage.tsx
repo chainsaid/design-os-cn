@@ -53,10 +53,10 @@ export function ProductPage() {
         {/* Page intro */}
         <div className="mb-8">
           <h1 className="text-2xl font-semibold text-stone-900 dark:text-stone-100 mb-2">
-            Product Definition
+            产品定义
           </h1>
           <p className="text-stone-600 dark:text-stone-400">
-            Define your product vision and break it into development sections.
+            定义产品愿景并拆分为开发模块。
           </p>
         </div>
 

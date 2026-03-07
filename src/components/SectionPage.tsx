@@ -61,10 +61,10 @@ export function SectionPage() {
   // Handle missing section
   if (!section) {
     return (
-      <AppLayout backTo="/sections" backLabel="Sections">
+      <AppLayout backTo="/sections" backLabel="模块">
         <div className="text-center py-12">
           <p className="text-stone-600 dark:text-stone-400">
-            Section not found: {sectionId}
+            未找到模块：{sectionId}
           </p>
         </div>
       </AppLayout>
@@ -79,7 +79,7 @@ export function SectionPage() {
   const nextSection = !isLastSection ? sections[currentIndex + 1] : null
 
   return (
-    <AppLayout backTo="/sections" backLabel="Sections" title={section.title}>
+    <AppLayout backTo="/sections" backLabel="模块" title={section.title}>
       <div className="space-y-6">
         {/* Page intro */}
         <div className="mb-8">
@@ -96,7 +96,7 @@ export function SectionPage() {
 
         {/* Step 1: Section Overview (Spec) */}
         <StepIndicator step={1} status={stepStatuses[0]}>
-          <SpecCard spec={sectionData?.specParsed || null} sectionTitle="Section Overview" />
+          <SpecCard spec={sectionData?.specParsed || null} sectionTitle="模块概览" />
         </StepIndicator>
 
         {/* Step 2: Sample Data */}
@@ -112,7 +112,7 @@ export function SectionPage() {
             <Card className="border-stone-200 dark:border-stone-700 shadow-sm">
               <CardHeader className="pb-4">
                 <CardTitle className="text-lg font-semibold text-stone-900 dark:text-stone-100">
-                  Screen Designs
+                  界面设计
                   <span className="ml-2 text-sm font-normal text-stone-500 dark:text-stone-400">
                     ({sectionData.screenDesigns.length})
                   </span>
@@ -154,14 +154,14 @@ export function SectionPage() {
                     <Image className="w-5 h-5 text-stone-400 dark:text-stone-500" strokeWidth={1.5} />
                   </div>
                   <h3 className="text-base font-medium text-stone-600 dark:text-stone-400 mb-1">
-                    No screenshots captured yet
+                    尚未截取截图
                   </h3>
                   <p className="text-sm text-stone-500 dark:text-stone-400 mb-4">
-                    Capture screenshots of your screen designs for documentation
+                    截取界面设计的截图用于文档记录
                   </p>
                   <div className="bg-stone-100 dark:bg-stone-800 rounded-md px-4 py-2.5 w-full">
                     <p className="text-xs text-stone-500 dark:text-stone-400 mb-0.5">
-                      Run in Claude Code:
+                      在 Claude Code 中运行：
                     </p>
                     <code className="text-sm font-mono text-stone-700 dark:text-stone-300">
                       /screenshot-design
@@ -174,7 +174,7 @@ export function SectionPage() {
             <Card className="border-stone-200 dark:border-stone-700 shadow-sm">
               <CardHeader className="pb-4">
                 <CardTitle className="text-lg font-semibold text-stone-900 dark:text-stone-100">
-                  Screenshots
+                  截图
                   <span className="ml-2 text-sm font-normal text-stone-500 dark:text-stone-400">
                     ({sectionData.screenshots.length})
                   </span>
@@ -199,7 +199,7 @@ export function SectionPage() {
                           href={screenshot.url}
                           download={`${screenshot.name}.png`}
                           className="shrink-0 p-1.5 rounded-md text-stone-400 hover:text-stone-600 dark:text-stone-500 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
-                          title="Download screenshot"
+                          title="下载截图"
                         >
                           <Download className="w-4 h-4" strokeWidth={1.5} />
                         </a>
@@ -225,7 +225,7 @@ export function SectionPage() {
                   >
                     <div className="flex items-center gap-3">
                       <ArrowRight className="w-5 h-5" strokeWidth={1.5} />
-                      <span className="font-medium">Continue to {nextSection.title}</span>
+                      <span className="font-medium">继续到 {nextSection.title}</span>
                     </div>
                     <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
                   </button>
@@ -235,7 +235,7 @@ export function SectionPage() {
                   >
                     <div className="flex items-center gap-3">
                       <LayoutList className="w-5 h-5" strokeWidth={1.5} />
-                      <span className="font-medium">View All Sections</span>
+                      <span className="font-medium">查看所有模块</span>
                     </div>
                     <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
                   </button>
@@ -248,7 +248,7 @@ export function SectionPage() {
                 >
                   <div className="flex items-center gap-3">
                     <LayoutList className="w-5 h-5" strokeWidth={1.5} />
-                    <span className="font-medium">Back to All Sections</span>
+                    <span className="font-medium">返回所有模块</span>
                   </div>
                   <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" strokeWidth={1.5} />
                 </button>

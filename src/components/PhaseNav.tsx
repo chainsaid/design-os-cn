@@ -14,11 +14,11 @@ interface PhaseConfig {
 }
 
 const phases: PhaseConfig[] = [
-  { id: 'product', label: 'Product', icon: FileText, path: '/' },
-  { id: 'data-shape', label: 'Data Shape', icon: Boxes, path: '/data-shape' },
-  { id: 'design', label: 'Design', icon: Layout, path: '/design' },
-  { id: 'sections', label: 'Sections', icon: LayoutList, path: '/sections' },
-  { id: 'export', label: 'Export', icon: Package, path: '/export' },
+  { id: 'product', label: '产品', icon: FileText, path: '/' },
+  { id: 'data-shape', label: '数据模型', icon: Boxes, path: '/data-shape' },
+  { id: 'design', label: '设计', icon: Layout, path: '/design' },
+  { id: 'sections', label: '模块', icon: LayoutList, path: '/sections' },
+  { id: 'export', label: '导出', icon: Package, path: '/export' },
 ]
 
 export type PhaseStatus = 'completed' | 'current' | 'upcoming'

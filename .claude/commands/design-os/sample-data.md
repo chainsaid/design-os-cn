@@ -1,156 +1,154 @@
-# Sample Data
+# 示例数据 (Sample Data)
 
-You are helping the user create or update realistic sample data for a section of their product. This data will be used to populate screen designs. You will also generate TypeScript types based on the data structure.
+你正在协助用户为他们产品的某个功能模块创建或更新真实的示例数据。这些数据将用于填充界面设计 (Design Screen)。你还将根据数据模型 (Data Shape) 生成 TypeScript 类型。
 
-## Step 1: Check Prerequisites
+## 第 1 步：检查先决条件
 
-First, identify the target section and verify that `spec.md` exists for it.
+首先，确定目标模块并确认该模块已存在 `spec.md` 文件。
 
-Read `/product/product-roadmap.md` to get the list of available sections.
+阅读 `/product/product-roadmap.md` 以获取可用模块列表。
 
-If there's only one section, auto-select it. If there are multiple sections, use the AskUserQuestion tool to ask which section the user wants to generate data for.
+如果只有一个模块，则自动选择它。如果有多个模块，请使用 AskUserQuestion 工具询问用户想要为哪个模块生成数据。
 
-Then check if `product/sections/[section-id]/spec.md` exists. If it doesn't:
+然后检查 `product/sections/[section-id]/spec.md` 是否存在。如果不存在：
 
-"I don't see a specification for **[Section Title]** yet. Please run `/shape-section` first to define the section's requirements, then come back to generate sample data."
+“我还没看到 **[模块标题]** 的规范。请先运行 `/shape-section` 来定义该模块的要求，然后再回来生成示例数据。”
 
-Stop here if the spec doesn't exist.
+如果规范不存在，请停止操作。
 
-## Step 2: Check for Existing Sample Data
+## 第 2 步：检查现有示例数据
 
-Check if `product/sections/[section-id]/data.json` already exists.
+检查 `product/sections/[section-id]/data.json` 是否已存在。
 
-**If sample data already exists:**
+**如果示例数据已存在：**
 
-Read the existing `data.json` and `types.ts` files, then ask the user:
+阅读现有的 `data.json` 和 `types.ts` 文件，然后询问用户：
 
-"Sample data already exists for **[Section Title]**. What would you like to change about the existing data shape or sample data?"
+“**[模块标题]** 已存在示例数据。你想对现有的数据模型 (Data Shape) 或示例数据进行哪些修改？”
 
-Wait for the user's response describing what they want changed. Once you receive their notes, **immediately proceed** to update `data.json` and `types.ts` based on their requested changes — do not present a draft for approval.
+等待用户描述他们想要更改的内容。一旦收到他们的笔记，**立即继续**根据所要求的更改更新 `data.json` 和 `types.ts` —— 不要展示草案等待批准。
 
-After updating, inform the user:
+更新后，通知用户：
 
-"I've updated the sample data and types for **[Section Title]** based on your feedback. Review the changes and let me know if you'd like further adjustments, or run `/design-screen` when you're ready."
+“我已经根据你的反馈更新了 **[模块标题]** 的示例数据和类型。请查看更改并告知我是否需要进一步调整，或者在准备就绪后运行 `/design-screen`。”
 
-Stop here — the remaining steps below are for generating new data from scratch.
+此处停止 —— 以下步骤仅适用于从头开始生成新数据。
 
-**If no sample data exists:** Continue to Step 3.
+**如果不存在示例数据：** 继续执行第 3 步。
 
-## Step 3: Check for Global Data Shape
+## 第 3 步：检查全局数据模型 (Data Shape)
 
-Check if `/product/data-shape/data-shape.md` exists.
+检查 `/product/data-shape/data-shape.md` 是否存在。
 
-**If it exists:**
-- Read the file to understand the global entity definitions
-- Entity names in your sample data should match the global data shape
-- Use the descriptions and relationships as a guide
+**如果存在：**
+- 阅读该文件以了解全局实体定义
+- 你的示例数据中的实体名称应与全局数据模型 (Data Shape) 匹配
+- 将描述和关系作为参考指南
 
-**If it doesn't exist:**
-Show a warning but continue:
+**如果不存在：**
+显示警告但继续进行：
 
-"Note: A global data shape hasn't been defined yet. I'll create entity structures based on the section spec, but for consistency across sections, consider running `/data-shape` first."
+“注意：尚未定义全局数据模型 (Data Shape)。我将根据模块规范创建实体结构，但为了确保各模块之间的一致性，建议先运行 `/data-shape`。”
 
-## Step 4: Analyze and Generate
+## 第 4 步：分析并生成
 
-Read and analyze `product/sections/[section-id]/spec.md` to understand:
+阅读并分析 `product/sections/[section-id]/spec.md` 以了解：
 
-- What data entities are implied by the user flows?
-- What fields/properties would each entity need?
-- What sample values would be realistic and helpful for design?
-- What actions can be taken on each entity? (These become callback props)
+- 用户流程中暗示了哪些数据实体？
+- 每个实体需要哪些字段/属性？
+- 哪些示例值对设计来说是真实且有帮助的？
+- 可以对每个实体执行哪些操作？（这些将转化为回调 props）
 
-**If a global data shape exists:** Cross-reference the spec with the data shape. Use the same entity names and ensure consistency.
+**如果存在全局数据模型 (Data Shape)：** 将规范与该数据模型进行交叉引用。使用相同的实体名称并确保一致性。
 
-**Immediately proceed** to generate both files — do not present a draft for approval.
+**立即继续**生成这两个文件 —— 不要展示草案等待批准。
 
-### Generate `product/sections/[section-id]/data.json`
+### 生成 `product/sections/[section-id]/data.json`
 
-Create the data file with:
+创建包含以下内容的数文件：
 
-- **A `_meta` section** - Human-readable descriptions of each entity and how they relate in the UI (displayed in the Design OS interface)
-- **Realistic sample data** - Use believable names, dates, descriptions, etc.
-- **Varied content** - Mix short and long text, different statuses, etc.
-- **Edge cases** - Include at least one empty array, one long description, etc.
-- **TypeScript-friendly structure** - Use consistent field names and types
+- **`_meta` 部分** - 对每个实体及其在 UI 中的关系进行人类可读的描述（显示在 Design OS 界面中）
+- **真实的示例数据** - 使用可信的姓名、日期、描述等
+- **多样化的内容** - 混合长短文本、不同的状态等
+- **边界情况** - 至少包含一个空数组、一个长描述等
+- **TypeScript 友好的结构** - 使用一致的字段名称和类型
 
-#### Required `_meta` Structure
+#### 要求的 `_meta` 结构
 
-Every data.json MUST include a `_meta` object at the top level with:
+每个 `data.json` 必须在顶层包含一个 `_meta` 对象，其中包含：
 
-1. **`models`** - An object where each key is an entity name and value is a plain-language description of what it represents in the UI
-2. **`relationships`** - An array of strings describing how entities relate from the user's perspective
+1. **`models`** - 一个对象，其中每个键是实体名称，值是关于它在 UI 中代表什么的平实语言描述
+2. **`relationships`** - 一个描述实体在用户视角下如何关联的字符串数组
 
-Example structure:
+结构示例：
 
 ```json
 {
   "_meta": {
     "models": {
-      "invoices": "Each invoice represents a bill you send to a client for work completed.",
-      "lineItems": "Line items are the individual services or products listed on each invoice."
+      "invoices": "每张发票代表你向客户发送的已完成工作的账单。",
+      "lineItems": "明细项是每张发票上列出的具体服务或产品。"
     },
     "relationships": [
-      "Each Invoice contains one or more Line Items (the breakdown of charges)",
-      "Invoices track which Client they belong to via the clientName field"
+      "每张发票 (Invoice) 包含一个或多个明细项 (Line Items)（费用分解）",
+      "发票通过 clientName 字段跟踪所属的客户 (Client)"
     ]
   },
   "invoices": [
     {
       "id": "inv-001",
       "invoiceNumber": "INV-2024-001",
-      "clientName": "Acme Corp",
+      "clientName": "Acme 集团",
       "clientEmail": "billing@acme.com",
       "total": 1500.00,
       "status": "sent",
       "dueDate": "2024-02-15",
       "lineItems": [
-        { "description": "Web Design", "quantity": 1, "rate": 1500.00 }
+        { "description": "网页设计", "quantity": 1, "rate": 1500.00 }
       ]
     }
   ]
 }
 ```
 
-The `_meta` descriptions should:
-- Use plain, non-technical language
-- Explain what each entity represents from the user's perspective
-- Describe relationships in terms of "contains", "belongs to", "links to" — these are conceptual, not database relationships
-- **Match the global data shape entity names if one exists**
+`_meta` 描述应：
+- 使用简单的非技术语言
+- 从用户视角解释每个实体代表什么
+- 使用“包含”、“属于”、“链接到”来描述关系 —— 这些是概念性的，而非数据库关系
+- **如果存在全局数据模型 (Data Shape)，实体名称应与之匹配**
 
-The data should directly support the user flows and UI requirements in the spec.
+数据应直接支持规范中的用户流程和 UI 要求。
 
-### Generate `product/sections/[section-id]/types.ts`
+### 生成 `product/sections/[section-id]/types.ts`
 
-Generate TypeScript types based on the data structure.
+根据数据模型 (Data Shape) 生成 TypeScript 类型。
 
-#### Type Generation Rules
+#### 类型生成规则
 
-1. **Infer types from the sample data values:**
-   - Strings → `string`
-   - Numbers → `number`
-   - Booleans → `boolean`
-   - Arrays → `TypeName[]`
-   - Objects → Create a named interface
+1. **从示例数据值推断类型：**
+   - 字符串 → `string`
+   - 数字 → `number`
+   - 布尔值 → `boolean`
+   - 数组 → `TypeName[]`
+   - 对象 → 创建命名的 interface
 
-2. **Use union types for status/enum fields:**
+2. **为状态/枚举字段使用联合类型：**
+   - 如果像 `status` 这样的字段具有已知值，使用联合类型：`'draft' | 'sent' | 'paid' | 'overdue'`
+   - 根据规范和示例数据的多样性来确定这一点
 
-   - If a field like `status` has known values, use a union: `'draft' | 'sent' | 'paid' | 'overdue'`
+3. **为主组件创建一个 Props 接口：**
+   - 将数据包含为 prop（例如：`invoices: Invoice[]`）
+   - 为每个操作包含可选的回调 props（例如：`onDelete?: (id: string) => void`）
 
-   - Base this on the spec and the variety in sample data
+4. **使用一致的实体名称：**
+   - 如果存在全局数据模型 (Data Shape)，请使用相同的实体名称
+   - 这可确保各模块之间的一致性
 
-3. **Create a Props interface for the main component:**
-   - Include the data as a prop (e.g., `invoices: Invoice[]`)
-   - Include optional callback props for each action (e.g., `onDelete?: (id: string) => void`)
-
-4. **Use consistent entity names:**
-   - If a global data shape exists, use the same entity names
-   - This ensures consistency across sections
-
-Example types.ts:
+示例 types.ts：
 
 ```typescript
 // =============================================================================
-// UI Data Shapes — These define the data the components expect to receive
+// UI 数据模型 (Data Shape) — 这些定义了组件期望接收的数据格式
 // =============================================================================
 
 export interface LineItem {
@@ -171,63 +169,57 @@ export interface Invoice {
 }
 
 // =============================================================================
-// Component Props
+// 组件 Props
 // =============================================================================
 
 export interface InvoiceListProps {
-  /** The list of invoices to display */
+  /** 要显示的发票列表 */
   invoices: Invoice[]
-  /** Called when user wants to view an invoice's details */
+  /** 当用户想要查看发票详情时调用 */
   onView?: (id: string) => void
-  /** Called when user wants to edit an invoice */
+  /** 当用户想要编辑发票时调用 */
   onEdit?: (id: string) => void
-  /** Called when user wants to delete an invoice */
+  /** 当用户想要删除发票时调用 */
   onDelete?: (id: string) => void
-  /** Called when user wants to archive an invoice */
+  /** 当用户想要归档发票时调用 */
   onArchive?: (id: string) => void
-  /** Called when user wants to create a new invoice */
+  /** 当用户想要创建新发票时调用 */
   onCreate?: () => void
 }
 ```
 
-#### Naming Conventions
+#### 命名规范
 
-- Use PascalCase for interface names: `Invoice`, `LineItem`, `InvoiceListProps`
+- 接口名称使用 PascalCase (大驼峰)：`Invoice`, `LineItem`, `InvoiceListProps`
+- 属性名称使用 camelCase (小驼峰)：`clientName`, `dueDate`, `lineItems`
+- Props 接口应命名为 `[SectionName]Props`（例如：`InvoiceListProps`）
+- 针对回调 props 添加 JSDoc 注释以解释其调用时机
+- **如果存在全局数据模型 (Data Shape)，实体名称应与之匹配**
 
-- Use camelCase for property names: `clientName`, `dueDate`, `lineItems`
+## 第 5 步：告知用户与后续步骤
 
-- Props interface should be named `[SectionName]Props` (e.g., `InvoiceListProps`)
+在创建完两个文件后，告知用户：
 
-- Add JSDoc comments for callback props to explain when they're called
+“我已经为 **[模块标题]** 创建了两个文件：
 
-- **Match entity names from the global data shape if one exists**
+1. `product/sections/[section-id]/data.json` - 包含 [X] 条记录的示例数据
+2. `product/sections/[section-id]/types.ts` - 用于类型安全的 TypeScript 接口
 
-## Step 5: Inform and Next Steps
+包含的类型有：
+- `[实体]` - 主要数据类型
+- `[模块名称]Props` - 组件的 Props 接口（包含针对 [操作列表] 的回调）
 
-After creating both files, let the user know:
+请查看这些文件并告诉我是否需要任何调整。准备就绪后，运行 `/design-screen` 来为此模块创建界面设计 (Design Screen)。”
 
-"I've created two files for **[Section Title]**:
+## 重要注意事项
 
-1. `product/sections/[section-id]/data.json` - Sample data with [X] records
-
-2. `product/sections/[section-id]/types.ts` - TypeScript interfaces for type safety
-
-The types include:
-
-- `[Entity]` - The main data type
-- `[SectionName]Props` - Props interface for the component (includes callbacks for [list actions])
-
-Review the files and let me know if you'd like any adjustments. When you're ready, run `/design-screen` to create the screen design for this section."
-
-## Important Notes
-
-- Generate realistic, believable sample data - not "Lorem ipsum" or "Test 123"
-- Include 5-10 sample records for main entities (enough to show a realistic list)
-- Include edge cases: empty arrays, long text, different statuses
-- Keep field names clear and TypeScript-friendly (camelCase)
-- The data structure should directly map to the spec's user flows
-- Always generate types.ts alongside data.json
-- Callback props should cover all actions mentioned in the spec
-- **Use entity names from the global data shape for consistency across sections**
-- Do NOT present a draft for approval — generate the files immediately and let the user review after
-- If the user requests changes after reviewing, update the files immediately
+- 生成真实、可信的示例数据 —— 不要使用 "Lorem ipsum" 或 "Test 123"
+- 为主要实体提供 5-10 条示例记录（足以显示真实的列表效果）
+- 包含边界情况：空数组、长文本、不同的状态
+- 保持字段名称清晰且对 TypeScript 友好 (camelCase)
+- 数据模型 (Data Shape) 应直接映射到规范的用户流程
+- 始终在生成 data.json 的同时生成 types.ts
+- 回调 props 应涵盖规范中提到的所有操作
+- **使用全局数据模型 (Data Shape) 中的实体名称以保持各模块的一致性**
+- 不要展示草案等待批准 —— 立即生成文件并让用户随后审核
+- 如果用户在审核后要求更改，请立即更新文件

@@ -39,12 +39,12 @@ export function ExportPage() {
         {/* Page intro */}
         <div className="mb-8">
           <h1 className="text-2xl font-semibold text-stone-900 dark:text-stone-100 mb-2">
-            {exportZipAvailable ? 'Ready for implementation!' : 'Export'}
+            {exportZipAvailable ? '准备就绪，可以实施！' : '导出'}
           </h1>
           <p className="text-stone-600 dark:text-stone-400">
             {exportZipAvailable
-              ? 'Download your product design package and implement it in your codebase using the provided handoff prompts and assets.'
-              : 'Generate a complete handoff package for your development team.'}
+              ? '下载产品设计包，并使用提供的交接提示词和资产在你的代码库中实施。'
+              : '为你的开发团队生成完整的交接包。'}
           </p>
         </div>
 
@@ -58,27 +58,27 @@ export function ExportPage() {
                     <div className="w-6 h-6 rounded-full bg-lime-100 dark:bg-lime-900/30 flex items-center justify-center">
                       <Check className="w-4 h-4 text-lime-600 dark:text-lime-400" strokeWidth={2.5} />
                     </div>
-                    Ready to Export
+                    可以导出
                   </>
                 ) : (
                   <>
                     <div className="w-6 h-6 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
                       <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" strokeWidth={2.5} />
                     </div>
-                    Not Ready
+                    尚未就绪
                   </>
                 )}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-1">
-                <ChecklistItem label="Product Overview" isComplete={hasOverview} />
-                <ChecklistItem label="Product Roadmap" isComplete={hasRoadmap} />
-                <ChecklistItem label="Data Shape" isComplete={hasDataShape} />
-                <ChecklistItem label="Design System" isComplete={hasDesignSystem} />
-                <ChecklistItem label="Application Shell" isComplete={hasShell} />
+                <ChecklistItem label="产品概览" isComplete={hasOverview} />
+                <ChecklistItem label="产品路线图" isComplete={hasRoadmap} />
+                <ChecklistItem label="数据模型" isComplete={hasDataShape} />
+                <ChecklistItem label="设计系统" isComplete={hasDesignSystem} />
+                <ChecklistItem label="应用容器" isComplete={hasShell} />
                 <ChecklistItem
-                  label={`Sections with screen designs (${sectionStats.sectionsWithScreenDesigns}/${sectionStats.sectionCount})`}
+                  label={`包含界面设计的模块 (${sectionStats.sectionsWithScreenDesigns}/${sectionStats.sectionCount})`}
                   isComplete={hasSections}
                 />
               </div>
@@ -96,10 +96,10 @@ export function ExportPage() {
                     <div className="w-6 h-6 rounded-full bg-lime-100 dark:bg-lime-900/30 flex items-center justify-center">
                       <Check className="w-4 h-4 text-lime-600 dark:text-lime-400" strokeWidth={2.5} />
                     </div>
-                    Export Package is Ready
+                    导出包已就绪
                   </>
                 ) : (
-                  'Generate Export Package'
+                  '生成导出包'
                 )}
               </CardTitle>
             </CardHeader>
@@ -112,7 +112,7 @@ export function ExportPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-stone-900 dark:text-stone-100">
-                        Download & use in your codebase
+                        下载并在你的代码库中使用
                       </p>
                       <p className="text-sm text-stone-500 dark:text-stone-400">
                         product-plan.zip
@@ -124,17 +124,17 @@ export function ExportPage() {
                       className="inline-flex items-center gap-2 px-4 py-2 bg-lime-600 hover:bg-lime-700 text-white font-medium text-sm rounded-md transition-colors shrink-0"
                     >
                       <Download className="w-4 h-4" strokeWidth={2} />
-                      Download
+                      下载
                     </a>
                   </div>
                   <p className="text-sm text-stone-500 dark:text-stone-400">
-                    To regenerate, run <code className="font-mono text-stone-700 dark:text-stone-300">/export-product</code> again.
+                    如需重新生成，请再次运行 <code className="font-mono text-stone-700 dark:text-stone-300">/export-product</code>。
                   </p>
                 </div>
               ) : (
                 <div className="space-y-4">
                   <p className="text-stone-600 dark:text-stone-400">
-                    Run the following command to generate a complete export package with all components, types, and handoff documentation:
+                    运行以下命令生成完整的导出包，包含所有组件、类型和交接文档：
                   </p>
                   <div className="bg-stone-100 dark:bg-stone-800 rounded-md px-4 py-3">
                     <code className="text-sm font-mono text-stone-800 dark:text-stone-200">
@@ -148,38 +148,38 @@ export function ExportPage() {
               <div className="pt-4 border-t border-stone-200 dark:border-stone-700">
                 <h4 className="text-sm font-medium text-stone-500 dark:text-stone-400 uppercase tracking-wide mb-4 flex items-center gap-2">
                   <FolderTree className="w-4 h-4" strokeWidth={1.5} />
-                  What's Included
+                  包含内容
                 </h4>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <ExportItem
-                    title="Ready-to-Use Prompts"
-                    description="Pre-written prompts to copy/paste into your coding agent."
+                    title="即用型提示词"
+                    description="预先编写好的提示词，可直接复制/粘贴到你的编码代理中。"
                     items={['one-shot-prompt.md', 'section-prompt.md']}
                   />
                   <ExportItem
-                    title="Instructions"
-                    description="Detailed implementation guides for your coding agent."
-                    items={['product-overview.md', 'one-shot-instructions.md', 'incremental/ (milestones)']}
+                    title="实施指南"
+                    description="为你的编码代理提供的详细实施指南。"
+                    items={['product-overview.md', 'one-shot-instructions.md', 'incremental/ (里程碑)']}
                   />
                   <ExportItem
-                    title="Design System"
-                    description="Colors, typography, and styling configuration for consistent branding."
-                    items={['CSS tokens', 'Tailwind config', 'Font setup']}
+                    title="设计系统"
+                    description="颜色、字体和样式配置，确保品牌一致性。"
+                    items={['CSS 原子', 'Tailwind 配置', '字体设置']}
                   />
                   <ExportItem
-                    title="Data Shape"
-                    description="Entity definitions and sample data for your application."
-                    items={['TypeScript types', 'Sample data', 'Entity docs']}
+                    title="数据模型"
+                    description="应用的实体定义和示例数据。"
+                    items={['TypeScript 类型', '示例数据', '实体文档']}
                   />
                   <ExportItem
-                    title="Components"
-                    description="React components and visual references for each section."
-                    items={['Shell components', 'Section components', 'Screenshots']}
+                    title="组件"
+                    description="每个模块的 React 组件和视觉参考。"
+                    items={['容器组件', '模块组件', '截图']}
                   />
                   <ExportItem
-                    title="Test Instructions"
-                    description="Framework-agnostic test specs for TDD implementation."
-                    items={['tests.md per section', 'User flow tests', 'Empty state tests']}
+                    title="测试说明"
+                    description="框架无关的测试规范，用于 TDD 实施。"
+                    items={['每个模块的 tests.md', '用户流程测试', '空状态测试']}
                   />
                 </div>
               </div>
@@ -192,7 +192,7 @@ export function ExportPage() {
           <CardHeader>
             <CardTitle className="text-lg font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-2">
               <FileText className="w-5 h-5 text-stone-500 dark:text-stone-400" strokeWidth={1.5} />
-              How to Use the Export
+              如何使用导出
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -201,36 +201,36 @@ export function ExportPage() {
               <CollapsibleTrigger className="flex items-start justify-between w-full text-left group">
                 <div className="flex-1">
                   <h4 className="font-medium text-stone-900 dark:text-stone-100">
-                    Option A: Incremental (Recommended)
+                    方案 A：增量实施（推荐）
                   </h4>
                   <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">
-                    Build milestone by milestone for better control and easier debugging.
+                    逐个里程碑构建，便于更好地控制和调试。
                   </p>
                 </div>
                 <ChevronDown className="w-4 h-4 text-stone-400 dark:text-stone-500 mt-1 shrink-0 transition-transform group-data-[state=open]:rotate-180" strokeWidth={1.5} />
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <ol className="text-sm text-stone-600 dark:text-stone-400 space-y-2 list-decimal list-inside mt-4 pl-1">
-                  <li>Copy the <code className="font-mono text-stone-800 dark:text-stone-200">product-plan/</code> folder into your codebase</li>
-                  <li>Start with Shell (<code className="font-mono text-stone-800 dark:text-stone-200">instructions/incremental/01-shell.md</code>) — design tokens + app shell</li>
+                  <li>将 <code className="font-mono text-stone-800 dark:text-stone-200">product-plan/</code> 文件夹复制到你的代码库中</li>
+                  <li>从容器开始 (<code className="font-mono text-stone-800 dark:text-stone-200">instructions/incremental/01-shell.md</code>) — 原子设计 + 应用容器</li>
                   <li>
-                    For each section:
+                    对于每个模块：
                     <ul className="mt-1.5 ml-5 space-y-1">
                       <li className="flex items-center gap-2">
                         <span className="w-1 h-1 rounded-full bg-stone-400 dark:bg-stone-500" />
-                        Open <code className="font-mono text-stone-800 dark:text-stone-200">prompts/section-prompt.md</code>
+                        打开 <code className="font-mono text-stone-800 dark:text-stone-200">prompts/section-prompt.md</code>
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="w-1 h-1 rounded-full bg-stone-400 dark:bg-stone-500" />
-                        Fill in the section variables at the top (SECTION_NAME, SECTION_ID, NN)
+                        填写顶部的模块变量 (SECTION_NAME, SECTION_ID, NN)
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="w-1 h-1 rounded-full bg-stone-400 dark:bg-stone-500" />
-                        Copy/paste the prompt into your AI coding agent
+                        将提示词复制/粘贴到你的 AI 编码代理中
                       </li>
                     </ul>
                   </li>
-                  <li>Review and test after each milestone before moving to the next</li>
+                  <li>在完成每个里程碑后审查并测试，然后再继续下一个</li>
                 </ol>
               </CollapsibleContent>
             </Collapsible>
@@ -242,22 +242,22 @@ export function ExportPage() {
               <CollapsibleTrigger className="flex items-start justify-between w-full text-left group">
                 <div className="flex-1">
                   <h4 className="font-medium text-stone-900 dark:text-stone-100">
-                    Option B: One-Shot
+                    方案 B：一次性实施
                   </h4>
                   <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">
-                    Build the entire app in one session using a pre-written prompt.
+                    使用预先编写的提示词在一次会话中构建整个应用。
                   </p>
                 </div>
                 <ChevronDown className="w-4 h-4 text-stone-400 dark:text-stone-500 mt-1 shrink-0 transition-transform group-data-[state=open]:rotate-180" strokeWidth={1.5} />
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <ol className="text-sm text-stone-600 dark:text-stone-400 space-y-2 list-decimal list-inside mt-4 pl-1">
-                  <li>Copy the <code className="font-mono text-stone-800 dark:text-stone-200">product-plan/</code> folder into your codebase</li>
-                  <li>Open <code className="font-mono text-stone-800 dark:text-stone-200">prompts/one-shot-prompt.md</code></li>
-                  <li>Add any additional notes to the prompt (tech stack preferences, etc.)</li>
-                  <li>Copy/paste the prompt into your AI coding agent</li>
-                  <li>Answer the agent's clarifying questions about auth, user modeling, etc.</li>
-                  <li>Let the agent plan and implement everything</li>
+                  <li>将 <code className="font-mono text-stone-800 dark:text-stone-200">product-plan/</code> 文件夹复制到你的代码库中</li>
+                  <li>打开 <code className="font-mono text-stone-800 dark:text-stone-200">prompts/one-shot-prompt.md</code></li>
+                  <li>在提示词中添加任何额外的说明（技术栈偏好等）</li>
+                  <li>将提示词复制/粘贴到你的 AI 编码代理中</li>
+                  <li>回答代理关于认证、用户建模等的澄清问题</li>
+                  <li>让代理规划并实施所有内容</li>
                 </ol>
               </CollapsibleContent>
             </Collapsible>

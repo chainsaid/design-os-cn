@@ -1,59 +1,48 @@
-# Getting Started
+# 快速开始
 
-## Clone the Repository
+本指南将帮助你在 Design OS 中完成第一个产品的规划与设计。
 
-```bash
-git clone https://github.com/buildermethods/design-os.git my-project-design
-cd my-project-design
-```
+## 1. 安装与运行
 
-Replace `my-project-design` with whatever you want to name your design workspace.
-
-## Remove the Original Remote
+首先，克隆本仓库并在本地启动开发服务器：
 
 ```bash
-git remote remove origin
-```
-
-Now you have a clean local instance ready to use.
-
-## Install Dependencies
-
-```bash
+git clone https://github.com/chainsaid/design-os-cn.git
+cd design-os
 npm install
-```
-
-## Start the Dev Server
-
-```bash
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+在浏览器中打开 `http://localhost:3000` 即可查看项目。
 
-## Open Claude Code
+## 2. 启动 Claude Code
 
-In the same project directory, start Claude Code:
+Design OS 是为了与 **Claude Code** 配合使用而设计的。在项目根目录下，启动会话：
 
 ```bash
 claude
 ```
 
-You're ready to start designing. Run `/product-vision` to begin defining your product.
+## 3. 设置代理指令 (Agent Directives)
 
----
+为了获得最佳体验，请确保 Claude 遵循 Design OS 专用的代理指令。这些指令位于 `agents.md` 中。你可以直接告诉它：
 
-## Optional: Save as Your Own Template
+“请阅读项目根目录下的 `agents.md`。”
 
-If you want to reuse Design OS for future projects:
+## 4. 开启规划流程
 
-1. Push to your own GitHub repository:
+现在你已经准备好使用斜杠命令开始设计你的产品了。建议按以下顺序操作：
 
-```bash
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-git push -u origin main
-```
+1. **`/product-vision`** (Product Vision) — 这是最重要的第一步。通过对话告诉 AI 你要构建什么。
+2. **`/design-tokens`** — 进行原子设计 (Design Tokens)。
+3. **`/design-shell`** — 进行容器设计 (Shell Design)。
+4. **针对你的首个功能模块 (Section Design)：**
+   - 运行 `/shape-section`
+   - 运行 `/design-screen`
+5. **`/export-product`** (Export) — 获取为你 implementation agent 准备的交付包。
 
-2. Go to your repository on GitHub, click **Settings**, and check **Template repository**.
+## 5. 提示 Tips
 
-Now you can create new instances using GitHub's "Use this template" button.
+- **保持对话**：Design OS 的核心是一场你与 AI 之间的对话。
+- **重启服务器**：当你让 AI 创建新模块或界面 (Design Screen) 时，可能需要重启 `npm run dev` 才能在浏览器中看到新路由。
+- **查阅文档**：如需具体步骤的详细信息，请查看 [产品规划](product-planning.md) 和 [功能模块设计](design-section.md) 指南。

@@ -44,12 +44,12 @@ export function parseShellSpec(md: string): ShellSpec | null {
   if (!md || !md.trim()) return null
 
   try {
-    // Extract overview
-    const overviewMatch = md.match(/## Overview\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
+    // Extract overview - supports both English and Chinese
+    const overviewMatch = md.match(/## (?:Overview|概览)\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
     const overview = overviewMatch?.[1]?.trim() || ''
 
-    // Extract navigation items
-    const navSection = md.match(/## Navigation Structure\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
+    // Extract navigation items - supports both English and Chinese
+    const navSection = md.match(/## (?:Navigation Structure|导航结构)\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
     const navigationItems: string[] = []
 
     if (navSection?.[1]) {
@@ -62,8 +62,8 @@ export function parseShellSpec(md: string): ShellSpec | null {
       }
     }
 
-    // Extract layout pattern
-    const layoutMatch = md.match(/## Layout Pattern\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
+    // Extract layout pattern - supports both English and Chinese
+    const layoutMatch = md.match(/## (?:Layout Pattern|布局模式)\s*\n+([\s\S]*?)(?=\n## |\n#[^#]|$)/)
     const layoutPattern = layoutMatch?.[1]?.trim() || ''
 
     // Return null if we couldn't parse anything meaningful

@@ -1,116 +1,125 @@
-# Codebase Implementation
+# 在代码库中实施 (Codebase Implementation)
 
-After exporting your designs from Design OS, you have a complete handoff package ready for implementation. This guide covers how to work with your AI coding agent to build the product.
+从 Design OS 导出设计后，你就拥有了一个准备好进行实施的完整交付包。本指南涵盖了如何与你的 AI 编码代理（Coding Agent）协作来构建产品。
 
-## Getting Started
+## 快速开始
 
-1. Copy the `product-plan/` folder into your target codebase
-2. Start your AI coding agent (Claude Code, Cursor, etc.)
-3. Choose your implementation approach: one-shot or section-by-section
+1. 将 `product-plan/` 文件夹复制到你的目标产品代码库中。
+2. 启动你的 AI 编码代理（如 Claude Code, Cursor 等）。
+3. 选择你的实施方式：全量实施或按模块逐步实施。
 
-## Implementation Approaches
+---
 
-### Option A: Incremental Implementation (Recommended)
+## 实施方式
 
-For larger products or when you want to review progress incrementally.
+### 方式 A：循序渐进实施（推荐）
 
-**How it works:**
+适用于较大规模的产品，或者当你希望逐步审核进度时。
 
-Work through the instructions in order:
+**工作流程：**
 
-1. **Shell** (`instructions/incremental/01-shell.md`) — Design tokens and application shell
-2. **Sections** (`instructions/incremental/02-*.md`, `03-*.md`, etc.) — Each feature section, one at a time
+按顺序执行指令：
 
-For each milestone:
+1. **容器 (Shell)** (`instructions/incremental/01-shell.md`) — 原子设计 (Design Tokens) 和容器设计 (Shell Design)。
+2. **功能模块 (Sections)** (`instructions/incremental/02-*.md`, `03-*.md` 等) — 每次实现一个功能模块。
 
-1. Open `product-plan/prompts/section-prompt.md`
-2. Fill in the section variables at the top (SECTION_NAME, SECTION_ID, NN)
-3. Add any section-specific notes
-4. Copy/paste the prompt into your coding agent
-5. Answer clarifying questions and let the agent implement
-6. Review and test before moving to the next milestone
+针对每个里程碑：
 
-**The section prompt:**
+1. 打开 `product-plan/prompts/section-prompt.md`。
+2. 填写顶部的模块变量（SECTION_NAME, SECTION_ID, NN）。
+3. 添加任何针对该模块的特定备注。
+4. 将提示词复制并粘贴到你的编码代理中。
+5. 回答澄清性问题，并让代理开始实施。
+6. 在进入下一个里程碑之前进行审核和测试。
 
-- References the section's instruction file and assets
-- Points to `tests.md` for UI behavior test specs
-- Guides the agent to ask clarifying questions before implementing
+**模块提示词的内容：**
+- 引用了该模块的指令文件和资源。
+- 指向 `tests.md` 以获取 UI 行为测试规范。
+- 引导代理在实施前提出澄清性问题。
 
-### Option B: One-Shot Implementation
+### 方式 B：全量实施 (One-Shot)
 
-For simpler products or when you want to build everything in one session.
+适用于较简单的产品，或者当你希望在一次会话中构建所有内容时。
 
-**How it works:**
+**工作流程：**
 
-1. Open `product-plan/prompts/one-shot-prompt.md`
-2. Add any additional notes (tech stack preferences, constraints)
-3. Copy/paste the prompt into your coding agent
-4. Answer the agent's clarifying questions about auth, user modeling, etc.
-5. Let the agent plan and implement everything
+1. 打开 `product-plan/prompts/one-shot-prompt.md`。
+2. 添加任何额外备注（技术栈偏好、约束条件等）。
+3. 将提示词复制并粘贴到你的编码代理中。
+4. 回答代理关于身份验证、用户建模等方面的澄清性问题。
+5. 让代理进行规划并实施所有内容。
 
-The prompt references `product-overview.md` and `instructions/one-shot-instructions.md`, and guides your agent to review all provided files and ask clarifying questions before starting.
+提示词引用了 `product-overview.md` 和 `instructions/one-shot-instructions.md`，并引导你的代理在开始前审查所有提供的文件并提出澄清性问题。
 
-## Test-Driven Development
+---
 
-Each section includes a `tests.md` file with detailed test-writing instructions. We recommend a TDD approach:
+## 测试驱动开发 (TDD)
 
-1. **Read the test instructions** — Review `sections/[section-id]/tests.md`
-2. **Write failing tests** — Based on the user flows and assertions described
-3. **Implement the feature** — Make the tests pass
-4. **Refactor** — Clean up while keeping tests green
+每个模块都包含一个 `tests.md` 文件，其中包含详细的测试编写指令。我们推荐采用 TDD 方式：
 
-The test instructions include:
+1. **阅读测试指令** — 审查 `sections/[section-id]/tests.md`。
+2. **编写失败的测试** — 根据描述的用户流程和断言编写测试。
+3. **实现功能** — 使测试通过。
+4. **重构** — 在保持测试通过的同时清理代码。
 
-- **User flow tests** — Success and failure paths for key interactions
-- **Empty state tests** — Verifying behavior when no records exist
-- **Component interaction tests** — Specific UI elements and behaviors
-- **Edge cases** — Boundary conditions and transitions
+测试指令包含：
+- **用户流程测试** — 核心交互的成功和失败路径。
+- **空状态测试** — 验证无记录时的行为。
+- **组件交互测试** — 具体的 UI 元素和行为。
+- **边界情况** — 临界条件和状态转换。
 
-Test instructions are **framework-agnostic**—they describe WHAT to test, not HOW. Adapt them to your testing setup (Jest, Vitest, Playwright, Cypress, RSpec, Minitest, PHPUnit, etc.).
+测试指令是**框架无关**的 —— 它们描述了测试什么，而不是如何测试。请将其适配到你的测试环境（如 Jest, Vitest, Playwright, Cypress, RSpec, Minitest, PHPUnit 等）。
 
-## Spec-Driven Development
+---
 
-We also recommend a spec-driven approach:
+## 规范驱动开发 (Spec-Driven)
 
-1. **Review the design** — Understand what's been designed and why
-2. **Ask clarifying questions** — Resolve any ambiguities before coding
-3. **Plan the implementation** — Decide on architecture, data layer, and integration approach
-4. **Write tests first** — Based on the provided test instructions
-5. **Implement** — Build to make tests pass
-6. **Verify** — Ensure the implementation matches the design
+我们也推荐采用规范驱动的开发方式：
 
-This approach prevents wasted work from misunderstandings and ensures the implementation properly supports the UI designs.
+1. **审查设计** — 理解已设计的内容及其原因。
+2. **提出澄清性问题** — 在编码前解决任何模糊之处。
+3. **规划实施** — 确定架构、数据层和集成方式。
+4. **先编写测试** — 根据提供的测试指令进行。
+5. **实施** — 以使测试通过为目标进行构建。
+6. **验证** — 确保实施结果与设计相符。
 
-## Clarifying Questions
+这种方式可以防止因误解而导致的无谓劳动，并确保实施方案能够正确支持 UI 设计。
 
-Before finalizing any implementation plan, encourage your agent to review all provided files and ask clarifying questions about:
+---
 
-- Your tech stack and any existing codebase conventions
-- Authentication and user management approach
-- How to extend the data shapes for your backend needs
-- Any product requirements that need clarification
-- Anything else needed before implementing
+## 澄清性问题
 
-## What's Included vs. What You Build
+在敲定任何实施计划之前，请鼓励你的代理审查所有提供的文件，并就以下方面提出澄清性问题：
 
-The Design OS export provides:
+- 你的技术栈及任何现有的代码库约定。
+- 身份验证和用户管理方案。
+- 如何根据后端需求扩展数据模型 (Data Shape)。
+- 任何需要进一步解释的产品要求。
+- 在实施前需要的任何其他信息。
 
-- **Finished UI components** — Props-based, fully styled, responsive, dark mode support
-- **Product requirements** — Specs, user flows, and scope definitions
-- **Design system tokens** — Colors, typography, CSS custom properties
-- **Sample data** — Showing the shape of data components expect
-- **UI behavior test specs** — What to test from the user's perspective
+---
 
-Your implementation agent builds everything else — the backend, data layer, routing, state management, and tests. The components accept data and fire callbacks via props; how you fulfill those contracts is an implementation decision.
+## 交付内容 vs. 你需要构建的内容
 
-**The UI components are complete and production-ready.** Wire them up, don't rebuild them.
+Design OS 导出包提供的内容：
+- **完成的 UI 组件** — 基于 props、完整样式、响应式、支持暗色模式。
+- **产品要求** — 规范、用户流程和范围定义。
+- **原子设计令牌 (Tokens)** — 颜色、排版、CSS 自定义属性。
+- **示例数据** — 展示组件期望的数据模型 (Data Shape)。
+- **UI 行为测试规范** — 从用户视角出发需要测试的内容。
 
-## Tips
+你的实施代理负责构建其他所有内容 —— 后端、数据层、路由、状态管理以及具体的测试代码。组件通过 props 接收数据并触发回调；你如何履行这些契约属于实施层面的决策。
 
-- **Use the pre-written prompts** — They guide your agent to review designs and ask the right questions
-- **Always include product-overview.md** — It gives essential context about the full product
-- **Write tests first** — Use the `tests.md` instructions for TDD
-- **Review incrementally** — Section-by-section implementation lets you catch issues early
-- **Test with sample data first** — Use the provided sample-data.json before building real APIs
-- **Handle empty states** — Ensure good UX when no records exist (first-time users)
-- **Trust the components** — They're designed and styled already; wire them up, don't rebuild them
+**UI 组件是完整且生产就绪的。请直接连接它们，而不是重新构建。**
+
+---
+
+## 使用技巧
+
+- **使用预设提示词** — 它们引导代理审查设计并提出正确的问题。
+- **始终包含 product-overview.md** — 它提供了关于完整产品的核心背景。
+- **先编写测试** — 利用 `tests.md` 指令进行 TDD。
+- **循序渐进地审核** — 按模块实施可以让你及早发现问题。
+- **先用示例数据测试** — 在构建真实 API 之前，先使用提供的 `sample-data.json`。
+- **处理空状态** — 确保无记录时（如新用户）拥有良好的用户体验。
+- **信任组件** — 它们已经过设计和样式处理；直接连接逻辑，不要重复造轮子。
