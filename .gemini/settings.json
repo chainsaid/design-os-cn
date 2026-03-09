@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@playwright/mcp@0.0.68",
+        "--browser",
+        "chromium",
+        "--headless"
+      ],
+      "env": {
+        "PLAYWRIGHT_BROWSERS_PATH": "C:\\Users\\lielo\\AppData\\Local\\ms-playwright",
+        "PLAYWRIGHT_CHROMIUM_USE_HEADLESS_SHELL": "1"
+      },
+      "trust": true
+    }
+  }
+}

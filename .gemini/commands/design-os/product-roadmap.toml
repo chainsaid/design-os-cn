@@ -1,0 +1,9 @@
+description = "定义或更新产品功能模块路线图。"
+
+prompt = """
+请遵循以下指令来定义或更新产品路线图：
+
+@{.claude/commands/design-os/product-roadmap.md}
+
+用户输入: {{args}}
+"""
